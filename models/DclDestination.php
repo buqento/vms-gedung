@@ -58,15 +58,15 @@ class DclDestination extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'company_name' => 'Nama Perusahaan',
+            'company_name' => 'Nama Tenant',
             'open_hour' => 'Jam Buka',
             'close_hour' => 'Jam Tutup',
-            'build_name' => 'Lokasi Gedung',
+            'build_name' => 'Lokasi',
             'floor' => 'Lantai',
             'phone' => 'Telepon',
             'email' => 'Email',
-            'profile' => 'Profil Gedung',
-            'picture' => 'Gambar Gedung',
+            'profile' => 'Profil Tenant',
+            'picture' => 'Foto Profil',
             'address' => 'Alamat',
         ];
     }

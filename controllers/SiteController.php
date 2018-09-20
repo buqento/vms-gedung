@@ -9,8 +9,10 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
-
+use app\models\DclDestination;
 use app\models\ViewVisit;
+use app\models\UserApp;
+use app\models\Visited;
 use yii\data\ActiveDataProvider;
 
 class SiteController extends Controller
@@ -64,19 +66,41 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $tenant = Yii::$app->db->createCommand('SELECT COUNT(id) FROM dcl_destination')
-            ->queryScalar();
-        $user = Yii::$app->db->createCommand('SELECT COUNT(id)  FROM user_app')
-            ->queryScalar();
-        $visitor = Yii::$app->db->createCommand('SELECT COUNT(id_number) FROM view_visit')
-            ->queryScalar();
+        $tenant = DclDestination::find()->count();
+        $user = UserApp::find()->count();
+        $visited = Visited::find()->count();
+
+        $docotel = Visited::find()
+            ->where(['destination' => 'Docotel World'])
+            ->count();
+        $grapari = Visited::find()
+            ->where(['destination' => 'GraPARI Telkomsel'])
+            ->count();
+        $arsip = Visited::find()
+            ->where(['destination' => 'Gedung Arsip Nasional RI'])
+            ->count();
+        $mercure = Visited::find()
+            ->where(['destination' => 'Hotel Grand Mercure Jakarta Harmoni'])
+            ->count();
+        $gmp = Visited::find()
+            ->where(['destination' => 'Gajah Mada Plaza'])
+            ->count();
+        $rswaras = Visited::find()
+            ->where(['destination' => 'Rumah Sakit Sumber Waras'])
+            ->count();
 
         return $this->render('index', [
             'tenant' => $tenant,
             'user' => $user,
-            'visitor' => $visitor,
+            'visited' => $visited,
+
+            'docotel' => $docotel,
+            'grapari' => $grapari,
+            'arsip' => $arsip,
+            'mercure' => $mercure,
+            'gmp' => $gmp,
+            'rswaras' => $rswaras
         ]);
-        // return $this->render('index');
     }
 
     /**

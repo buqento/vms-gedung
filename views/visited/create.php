@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Dcldestination */
+/* @var $model app\models\Visited */
 
-$this->title = 'Create';
-$this->params['breadcrumbs'][] = ['label' => 'Tenant', 'url' => ['index']];
+$this->title = 'Create Visited';
+$this->params['breadcrumbs'][] = ['label' => 'Visiteds', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="dcldestination-create">
+<div class="visited-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

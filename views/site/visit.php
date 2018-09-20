@@ -12,23 +12,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="body-content">
 
-<?= GridView::widget([
-    'dataProvider' => $dataProvider,
-    'columns' => [
-        ['class' => 'yii\grid\SerialColumn'],
-        'guest_name',
-        // 'id_number',
-        'phone_number',
-        // 'email',
-        // 'photo',
-        'code',
-        'company_name',
-        'dt_visit:datetime',
-        'long_visit',
-        // 'additional_info' => 'Additional Info',
-        ['class' => 'yii\grid\ActionColumn'],
-    ],
-]); ?>
+<?php 
+// echo yii\grid\GridView::widget([
+//     'dataProvider' => $dataProvider,
+// ]);
+?>
 
     </div>
 </div>

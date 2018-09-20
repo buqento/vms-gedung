@@ -2,10 +2,12 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use kartik\time\TimePicker;
 use app\models\Dclbuilding;
 use app\models\Dclfloor;
 use dosamigos\ckeditor\CKEditor;
+use kartik\select2\Select2;
+use kartik\file\FileInput;
+use kartik\time\TimePicker;
 ?>
 
 <div class="dcldestination-form">
@@ -19,20 +21,28 @@ use dosamigos\ckeditor\CKEditor;
     <?= $form->field($model, 'close_hour')->widget(TimePicker::classname(), []) ?>
 
     <?php 
-    $building = Dclbuilding::find()
-        ->select(['name'])
-        ->indexBy('id')
-        ->column();
+        $building = Dclbuilding::find()
+            ->select(['name'])
+            ->indexBy('id')
+            ->column();
+
+        echo $form->field($model, 'build_name')->widget(Select2::classname(), [
+            'data' => $building,
+            'language' => 'en',
+        ]);
     ?>
-    <?= $form->field($model, 'build_name')->dropDownList($building) ?>
 
     <?php 
-    $floor = Dclfloor::find()
-        ->select(['floor'])
-        ->indexBy('id')
-        ->column();
+        $floor = Dclfloor::find()
+            ->select(['floor'])
+            ->indexBy('id')
+            ->column();
+
+        echo $form->field($model, 'floor')->widget(Select2::classname(), [
+            'data' => $floor,
+            'language' => 'en',
+        ]);
     ?>
-    <?= $form->field($model, 'floor')->dropDownList($floor) ?>
 
     <?= $form->field($model, 'phone')->textInput() ?>
 
@@ -43,7 +53,10 @@ use dosamigos\ckeditor\CKEditor;
         'preset' => 'basic'
     ]) ?>
 
-    <?= $form->field($model, 'picture')->fileInput() ?>
+    <?= $form->field($model, 'picture')->widget(FileInput::classname(), [
+            'options' => ['accept' => 'image/*'],
+        ])
+    ?>
 
     <?= $form->field($model, 'address')->widget(CKEditor::className(), [
         'options' => ['rows' => 3],

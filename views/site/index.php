@@ -44,10 +44,10 @@ use dosamigos\chartjs\ChartJs;
                     <span class="info-box-icon bg-green"><i class="fa fa-calendar"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text">Kunjungan</span>
-                        <span class="info-box-number"><?= $visitor ?></span>
+                        <span class="info-box-number"><?= $visited ?></span>
                         <span>
                             <?php echo Html::a('Selengkapnya ...', 
-                                ['visit']
+                                ['visited/index']
                             ) ?>
                         </span>
                     </div>
@@ -58,64 +58,32 @@ use dosamigos\chartjs\ChartJs;
 
         <div class="row">
             <div class="col-lg-6 col-md-12">
-                <?= ChartJs::widget([
-                    'type' => 'bar',
-                    'options' => [
-                        'height' => 100,
-                        'width' => 100
-                    ],
-                    'data' => [
-                        'labels' => ["January", "February", "March", "April", "May", "June", "July"],
-                        'datasets' => [
-                            // [
-                            //     'label' => "My First dataset",
-                            //     'backgroundColor' => "rgba(179,181,198,0.2)",
-                            //     'borderColor' => "rgba(179,181,198,1)",
-                            //     'pointBackgroundColor' => "rgba(179,181,198,1)",
-                            //     'pointBorderColor' => "#fff",
-                            //     'pointHoverBackgroundColor' => "#fff",
-                            //     'pointHoverBorderColor' => "rgba(179,181,198,1)",
-                            //     'data' => [65, 59, 90, 81, 56, 55, 40]
-                            // ],
-                            [
-                                'label' => "Data Kunjungan",
-                                'backgroundColor' => "rgba(255,99,132,0.2)",
-                                'borderColor' => "rgba(255,99,132,1)",
-                                'pointBackgroundColor' => "rgba(255,99,132,1)",
-                                'pointBorderColor' => "#fff",
-                                'pointHoverBackgroundColor' => "#fff",
-                                'pointHoverBorderColor' => "rgba(255,99,132,1)",
-                                'data' => [28, 48, 40, 19, 96, 27, 100]
-                            ]
-                        ]
-                    ]
-                ]);
-                ?>
+
+<?= ChartJs::widget([
+    'type' => 'bar',
+    'options' => [
+        'height' => 400,
+        'width' => 400
+    ],
+    'data' => [
+        'labels' => ["docotel", "grapari", "arsip", "mercure", "gmp", "rswaras"],
+        'datasets' => [
+            [
+                'label' => "Data Kunjungan",
+                'backgroundColor' => "rgba(255,99,132,0.2)",
+                'borderColor' => "rgba(179,181,198,1)",
+                'pointBackgroundColor' => "rgba(179,181,198,1)",
+                'pointBorderColor' => "#fff",
+                'pointHoverBackgroundColor' => "#fff",
+                'pointHoverBorderColor' => "rgba(179,181,198,1)",
+                'data' => [$docotel, $grapari, $arsip, $mercure, $gmp, $rswaras]
+            ],
+        ]
+    ]
+]);
+?>
+
             </div>
-            <div class="col-lg-6 col-md-12">
-                <?= ChartJs::widget([
-                    'type' => 'line',
-                    'options' => [
-                        'height' => 100,
-                        'width' => 100
-                    ],
-                    'data' => [
-                        'labels' => ["January", "February", "March", "April", "May", "June", "July"],
-                        'datasets' => [
-                            [
-                                'label' => "Data Kunjungan",
-                                'backgroundColor' => "rgba(255,99,132,0.2)",
-                                'borderColor' => "rgba(255,99,132,1)",
-                                'pointBackgroundColor' => "rgba(255,99,132,1)",
-                                'pointBorderColor' => "#fff",
-                                'pointHoverBackgroundColor' => "#fff",
-                                'pointHoverBorderColor' => "rgba(255,99,132,1)",
-                                'data' => [28, 48, 40, 19, 96, 27, 100]
-                            ]
-                        ]
-                    ]
-                ]);
-                ?>
-            </div>
+            
         </div>
 </div>
