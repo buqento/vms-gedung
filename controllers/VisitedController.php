@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Visited;
 use app\models\VisitedSearch;
+use app\models\VisitedSearchToday;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -38,10 +39,14 @@ class VisitedController extends Controller
     {            
         $searchModel = new VisitedSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModelToday = new VisitedSearchToday();
+        $dataProviderToday = $searchModelToday->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
+            'searchModelToday' => $searchModelToday,
             'dataProvider' => $dataProvider,
+            'dataProviderToday' => $dataProviderToday,
         ]);
     }
 

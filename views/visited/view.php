@@ -13,7 +13,12 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="visited-view">
 
-<?php $content1 = DetailView::widget([
+<?php 
+
+
+$content1 = 
+
+DetailView::widget([
     'model' => $model,
     'attributes' => [
         // 'id',
@@ -23,7 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'gender',
         'phone_number',
         'email:email',
-        'photo',
+		[
+			'attribute'=>'photo',
+			'value'=>'../../../yiibase/web/user/photo/'.$model->photo, // WEB ACCESSABLE PATH + FILENAME 
+			'format' => ['image',['width'=>'100','height'=>'100']],
+		],
+        // 'photo',
         'address',
         'visit_code',
         'destination',
@@ -32,7 +42,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'additional_info:ntext',
         'created:datetime',
     ],
-]) ?>
+]) 
+
+?>
 
 <?php
 echo TabsX::widget([

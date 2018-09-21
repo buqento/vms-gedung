@@ -10,7 +10,7 @@ use app\models\Visited;
 /**
  * VisitedSearch represents the model behind the search form of `app\models\Visited`.
  */
-class VisitedSearch extends Visited
+class VisitedSearchToday extends Visited
 {
     /**
      * {@inheritdoc}
@@ -54,8 +54,7 @@ class VisitedSearch extends Visited
             ],
             'pagination' => [
                 'pageSize' => 10,
-            ], 
-
+            ],  
         ]);
 
         $this->load($params);
@@ -83,7 +82,7 @@ class VisitedSearch extends Visited
             ->andFilterWhere(['like', 'visit_code', $this->visit_code])
             ->andFilterWhere(['like', 'destination', $this->destination])
             ->andFilterWhere(['like', 'long_visit', $this->long_visit])
-            ->andFilterWhere(['like', 'dt_visit', $this->dt_visit])
+            ->andFilterWhere(['like', 'dt_visit', date("Y-m-d")])
             ->andFilterWhere(['like', 'additional_info', $this->additional_info]);
 
         return $dataProvider;
