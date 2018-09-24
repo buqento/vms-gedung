@@ -4,13 +4,12 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\DcldestinationSearch */
+/* @var $searchModel app\models\UsertypeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Tenant';
+$this->title = 'Tipe Pengguna';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
 
     <div>
         <div class="col-md-6 text-left">
@@ -36,16 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             // 'id',
-            'company_name',
-            'open_hour',
-            'close_hour',
-            // 'build_name',
-            // 'floor',
-            //'phone',
-            //'email:email',
-            //'profile:ntext',
-            //'picture',
-            //'address:ntext',
+            'title',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -10,9 +10,9 @@ use yii\grid\GridView;
 $this->title = 'Lokasi';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="container">
 
-    <div class="row">
+
+    <div>
         <div class="col-md-6 text-left">
             <h3>
             <?= Html::encode($this->title) ?> 
@@ -41,4 +41,4 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-</div>
+

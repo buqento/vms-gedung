@@ -5,12 +5,29 @@ use yii\grid\GridView;
 $this->title = 'Daftar Pengguna';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-    <h1><?= Html::encode($this->title) ?></h1>
-    <div class="userapp-index">
+
+
+        <div>
+            <div class="col-md-6 text-left">
+                <h3>
+                <?= Html::encode($this->title) ?> 
+                <span class="glyphicon glyphicon glyphicon-menu-right"></span>
+                <small class="text-muted">Daftar</small>
+                </h3>
+            </div>
+            <div class="col-md-6 text-right">
+                <p>
+                <br>
+                <?= Html::a('Tambah', ['create'], ['class' => 'btn btn-success']) ?>
+                </p>
+            </div>
+        <div>
+
 
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
+            'summary' => false,
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 
@@ -24,7 +41,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'password',
                 //'authKey',
 
-                ['class' => 'yii\grid\ActionColumn'],
+                // ['class' => 'yii\grid\ActionColumn'],
             ],
         ]); ?>
-    </div>

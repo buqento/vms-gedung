@@ -3,19 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Visited;
-use app\models\VisitedSearch;
-use app\models\VisitedSearchToday;
-use app\models\UserLog;
+use app\models\Usertype;
+use app\models\UsertypeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\data\Sort;
-use yii\data\ActiveDataProvider;
+
 /**
- * VisitedController implements the CRUD actions for Visited model.
+ * UsertypeController implements the CRUD actions for Usertype model.
  */
-class VisitedController extends Controller
+class UsertypeController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -33,60 +30,44 @@ class VisitedController extends Controller
     }
 
     /**
-     * Lists all Visited models.
+     * Lists all Usertype models.
      * @return mixed
      */
     public function actionIndex()
-    {            
-        $searchModel = new VisitedSearch();
+    {
+        $searchModel = new UsertypeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $searchModelToday = new VisitedSearchToday();
-        $dataProviderToday = $searchModelToday->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
-            'searchModelToday' => $searchModelToday,
             'dataProvider' => $dataProvider,
-            'dataProviderToday' => $dataProviderToday,
         ]);
     }
 
     /**
-     * Displays a single Visited model.
+     * Displays a single Usertype model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-
-        $query = UserLog::find();
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-        ]);
-
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Creates a new Visited model.
+     * Creates a new Usertype model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Visited();
+        $model = new Usertype();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [
@@ -95,7 +76,7 @@ class VisitedController extends Controller
     }
 
     /**
-     * Updates an existing Visited model.
+     * Updates an existing Usertype model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -115,7 +96,7 @@ class VisitedController extends Controller
     }
 
     /**
-     * Deletes an existing Visited model.
+     * Deletes an existing Usertype model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -124,23 +105,23 @@ class VisitedController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Visited model based on its primary key value.
+     * Finds the Usertype model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Visited the loaded model
+     * @return Usertype the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Visited::findOne($id)) !== null) {
+        if (($model = Usertype::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-
 }

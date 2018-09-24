@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\grid\GridView;
 use kartik\tabs\TabsX;
 
 /* @var $this yii\web\View */
@@ -16,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php 
 
 
-$content1 = 
+$detail = 
 
 DetailView::widget([
     'model' => $model,
@@ -28,11 +29,11 @@ DetailView::widget([
         'gender',
         'phone_number',
         'email:email',
-		[
-			'attribute'=>'photo',
-			'value'=>'../../../yiibase/web/user/photo/'.$model->photo, // WEB ACCESSABLE PATH + FILENAME 
-			'format' => ['image',['width'=>'100','height'=>'100']],
-		],
+		// [
+		// 	'attribute'=>'photo',
+		// 	'value'=>'../../../yiibase/web/user/photo/'.$model->photo, // WEB ACCESSABLE PATH + FILENAME 
+		// 	'format' => ['image',['width'=>'100','height'=>'100']],
+		// ],
         // 'photo',
         'address',
         'visit_code',
@@ -42,7 +43,22 @@ DetailView::widget([
         'additional_info:ntext',
         'created:datetime',
     ],
-]) 
+]);
+
+
+$log = GridView::widget([
+        'dataProvider' => $dataProvider,
+        'summary'=>false,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            // 'id',
+            'visit_code',
+            'checkin',
+            'checkout',
+            'status'
+        ],
+    ]); 
+
 
 ?>
 
@@ -53,12 +69,12 @@ echo TabsX::widget([
     'items' => [
         [
             'label' => 'Detail Pengunjung',
-            'content' => $content1,
+            'content' => $detail,
             'active' => true
         ],
         [
             'label' => 'Log Pengunjung',
-            'content' => 'Log',
+            'content' => $log,
             // 'headerOptions' => ['style'=>'font-weight:bold'],
             'options' => ['id' => 'myveryownID'],
         ],

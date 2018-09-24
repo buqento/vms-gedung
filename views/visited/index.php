@@ -18,9 +18,8 @@ if(!empty($_GET['v'])){
     $f = $searchModel; 
 }
 ?>
-<div class="container">
 
-    <div class="row">
+    <div>
         <div class="col-md-6 text-left">
             <h3>
             <?= Html::encode($this->title) ?> 
@@ -40,6 +39,7 @@ if(!empty($_GET['v'])){
     <?= GridView::widget([
         'dataProvider' => $d,
         'filterModel' => $f,
+        'summary'=>false,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -57,9 +57,16 @@ if(!empty($_GET['v'])){
             // 'long_visit',
             // 'additional_info:ntext',
             //'created',
+            ['class' => 'yii\grid\ActionColumn',
+                'template' => '{view}',
+                'buttons' => [
+                    'view' => function ($url, $model) {
+                        return Html::a('<span class="glyphicon glyphicon-info-sign"></span>', $url, [
+                                    'title' => Yii::t('app', 'Lihat Detail'),
+                        ]);
+                    }
+                ],
+            ]
 
-            ['class' => 'yii\grid\ActionColumn'],
         ],
-        'summary'=>'',
     ]); ?>
-</div>

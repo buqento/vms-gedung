@@ -70,23 +70,23 @@ class SiteController extends Controller
         $user = UserApp::find()->count();
         $visited = Visited::find()->count();
 
-        $docotel = Visited::find()
-            ->where(['destination' => 'Docotel World'])
+        $a = Visited::find()
+            ->where(['destination' => 'Smart City'])
             ->count();
-        $grapari = Visited::find()
-            ->where(['destination' => 'GraPARI Telkomsel'])
+        $b = Visited::find()
+            ->where(['destination' => 'Software Engineering'])
             ->count();
-        $arsip = Visited::find()
-            ->where(['destination' => 'Gedung Arsip Nasional RI'])
+        $c = Visited::find()
+            ->where(['destination' => 'Human Resource & GA'])
             ->count();
-        $mercure = Visited::find()
-            ->where(['destination' => 'Hotel Grand Mercure Jakarta Harmoni'])
+        $d = Visited::find()
+            ->where(['destination' => 'Mahapatih'])
             ->count();
-        $gmp = Visited::find()
-            ->where(['destination' => 'Gajah Mada Plaza'])
+        $e = Visited::find()
+            ->where(['destination' => 'Solution'])
             ->count();
-        $rswaras = Visited::find()
-            ->where(['destination' => 'Rumah Sakit Sumber Waras'])
+        $f = Visited::find()
+            ->where(['destination' => 'Advertising Agency'])
             ->count();
 
         return $this->render('index', [
@@ -94,12 +94,12 @@ class SiteController extends Controller
             'user' => $user,
             'visited' => $visited,
 
-            'docotel' => $docotel,
-            'grapari' => $grapari,
-            'arsip' => $arsip,
-            'mercure' => $mercure,
-            'gmp' => $gmp,
-            'rswaras' => $rswaras
+            'a' => $a,
+            'b' => $b,
+            'c' => $c,
+            'd' => $d,
+            'e' => $e,
+            'f' => $f
         ]);
     }
 

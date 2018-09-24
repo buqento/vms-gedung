@@ -6,8 +6,7 @@ use dosamigos\chartjs\ChartJs;
 
 ?>
 
-<div class="container">
-        <div class="row">
+        <div>
         
             <div class="col-lg-4 col-md-12">
                 <div class="info-box">
@@ -56,7 +55,7 @@ use dosamigos\chartjs\ChartJs;
 
         </div>
 
-        <div class="row">
+        <div>
             <div class="col-lg-6 col-md-12">
 
 <?= ChartJs::widget([
@@ -66,7 +65,7 @@ use dosamigos\chartjs\ChartJs;
         'width' => 400
     ],
     'data' => [
-        'labels' => ["docotel", "grapari", "arsip", "mercure", "gmp", "rswaras"],
+        'labels' => ["Smart City", "Software Engineering", "Human Resource & GA", "Mahapatih", "Solution", "Advertising Agency"],
         'datasets' => [
             [
                 'label' => "Data Kunjungan",
@@ -76,7 +75,7 @@ use dosamigos\chartjs\ChartJs;
                 'pointBorderColor' => "#fff",
                 'pointHoverBackgroundColor' => "#fff",
                 'pointHoverBorderColor' => "rgba(179,181,198,1)",
-                'data' => [$docotel, $grapari, $arsip, $mercure, $gmp, $rswaras]
+                'data' => [$a, $b, $c, $d, $e, $f]
             ],
         ]
     ]
@@ -86,4 +85,3 @@ use dosamigos\chartjs\ChartJs;
             </div>
             
         </div>
-</div>

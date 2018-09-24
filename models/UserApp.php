@@ -33,11 +33,19 @@ class UserApp extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['guest_name', 'id_type', 'id_number', 'email', 'phone_number', 'address', 'username', 'password'], 'required'],
             [['guest_name', 'email'], 'string', 'max' => 50],
             [['id_number', 'username', 'password'], 'string', 'max' => 30],
             [['phone_number'], 'string', 'max' => 12],
-            [['photo'], 'string', 'max' => 100],
             [['authKey'], 'string', 'max' => 64],
+            [['email'], 'email'],
+            [['photo'], 
+                'file', 
+                'skipOnEmpty' => false,
+                'extensions' => 'png, jpg',
+                'maxSize' => 2097152, //500 kilobytes is 500 * 1024 bytes = 512 000 bytes
+                'tooBig' => 'Ukuran maksimal file 2MB'
+            ]
         ];
     }
 
@@ -57,5 +65,50 @@ class UserApp extends \yii\db\ActiveRecord
             'password' => 'Kata Sandi',
             'authKey' => 'Auth Key',
         ];
+    }
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $this->photo->saveAs('../../frontend/web/user/photo/' . $this->photo->baseName . '.' . $this->photo->extension);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getAuthKey()
+    {
+        return $this->authKey;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        return $this->authKey === $authKey;
+    }
+
+    public static function findIdentity($id)
+    {
+        return self::findOne($id);
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        throw new \yii\base\NotSupportedException();
+    }
+
+    public static function findByUsername($username)
+    {
+        return self::findOne(['username' => $username]);
+    }
+
+    public function validatePassword($password)
+    {
+        return $this->password === $password;
     }
 }
