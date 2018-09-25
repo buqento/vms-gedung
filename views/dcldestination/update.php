@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /* @var $model app\models\Dcldestination */
 
 $this->title = 'Ubah Tenant';
-$this->params['breadcrumbs'][] = ['label' => 'Tenants', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Tenant', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->company_name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Ubah';
 ?>
 <div class="dcldestination-update">
 

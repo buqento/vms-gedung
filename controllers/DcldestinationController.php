@@ -99,8 +99,21 @@ class DcldestinationController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $post = Yii::$app->request->post('DclDestination');
+        if (Yii::$app->request->isPost) {
+            $model->company_name = $post['company_name'];
+            $model->open_hour = $post['open_hour'];
+            $model->close_hour = $post['close_hour'];
+            $model->build_name = $post['build_name'];
+            $model->floor = $post['floor'];
+            $model->phone = $post['phone'];
+            $model->email = $post['email'];
+            $model->profile = $post['profile'];
+            $model->address = $post['address'];
+            $model->picture = UploadedFile::getInstance($model, 'picture');  
+            if($model->save() && $model->upload()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [

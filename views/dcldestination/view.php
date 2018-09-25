@@ -11,22 +11,27 @@ $this->params['breadcrumbs'][] = ['label' => 'Tenant', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dcldestination-view">
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            // 'id',
-            'company_name',
-            'open_hour',
-            'close_hour',
-            'build_name',
-            'floor',
-            'phone',
-            'email:email',
-            'profile:ntext',
-            'picture',
-            'address:ntext',
-        ],
-    ]) ?>
+    <h1>#<?= Html::encode($model->id) ?></h1>
+    <div class="col-md-2">
+        <img class="img-thumbnail" src="../uploads/<?= $model->picture ?>">
+    </div>
+    <div class="col-md-10">
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                // 'id',
+                'company_name',
+                'open_hour',
+                'close_hour',
+                'build_name',
+                'floor',
+                'phone',
+                'email:email',
+                'profile:ntext',
+                // 'picture',
+                'address:ntext',
+            ],
+        ]) ?>
+    </div>
 
 </div>

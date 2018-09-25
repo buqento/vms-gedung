@@ -18,7 +18,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 $detail = 
-
+'
+<div class="col-md-4">
+<img class="img-thumbnail" src="../../../yiibase/web/user/photo/'.$model->photo.'">
+</div>
+<div class="col-md-8">
+'.
 DetailView::widget([
     'model' => $model,
     'attributes' => [
@@ -43,7 +48,8 @@ DetailView::widget([
         'additional_info:ntext',
         'created:datetime',
     ],
-]);
+])
+."</div>";
 
 
 $log = GridView::widget([

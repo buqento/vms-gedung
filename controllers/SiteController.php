@@ -89,10 +89,21 @@ class SiteController extends Controller
             ->where(['destination' => 'Advertising Agency'])
             ->count();
 
+        $query = (new \yii\db\Query())
+            ->select(['destination AS Tenant', 'COUNT(id) AS Jumlah'])
+            ->from('visited')
+            ->orderBy('Jumlah DESC')
+            ->groupBy('destination');
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
         return $this->render('index', [
             'tenant' => $tenant,
             'user' => $user,
             'visited' => $visited,
+            'dataProvider' => $dataProvider,
 
             'a' => $a,
             'b' => $b,

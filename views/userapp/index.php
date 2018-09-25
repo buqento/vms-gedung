@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-$this->title = 'Daftar Pengguna';
+$this->title = 'Pengguna';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -41,6 +41,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'password',
                 //'authKey',
 
-                // ['class' => 'yii\grid\ActionColumn'],
+                ['class' => 'yii\grid\ActionColumn',
+                    'template' => '{view}',
+                    'buttons' => [
+                        'view' => function ($url, $model) {
+                            return Html::a('<span class="glyphicon glyphicon-info-sign"></span>', $url, [
+                                        'title' => Yii::t('app', 'Lihat Detail'),
+                            ]);
+                        }
+                    ],
+                ]
             ],
         ]); ?>
