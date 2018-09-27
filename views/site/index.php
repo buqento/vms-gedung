@@ -80,7 +80,7 @@ use yii\grid\GridView;
                         'width' => 100
                     ],
                     'data' => [
-                        'labels' => ["Smart City", "Software Engineering", "Human Resource & GA", "Mahapatih", "Solution", "Advertising Agency"],
+                        // 'labels' => ["Smart City", "Software Engineering", "Human Resource & GA", "Mahapatih", "Solution", "Advertising Agency"],
                         'datasets' => [
                             [
                                 'label' => "Data Kunjungan",

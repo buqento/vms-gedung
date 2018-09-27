@@ -9,9 +9,9 @@ use Yii;
  *
  * @property int $id
  * @property string $visit_code
- * @property string $checkin
- * @property string $checkout
- * @property int $status
+ * @property string $gate
+ * @property string $time_pass
+ * @property string $status
  */
 class UserLog extends \yii\db\ActiveRecord
 {
@@ -29,9 +29,10 @@ class UserLog extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['checkin', 'checkout'], 'safe'],
-            [['status'], 'integer'],
+            [['time_pass'], 'safe'],
             [['visit_code'], 'string', 'max' => 6],
+            [['gate'], 'string', 'max' => 5],
+            [['status'], 'string', 'max' => 3],
         ];
     }
 
@@ -43,8 +44,8 @@ class UserLog extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'visit_code' => 'Kode Kunjungan',
-            'checkin' => 'Checkin',
-            'checkout' => 'Checkout',
+            'gate' => 'Pintu',
+            'time_pass' => 'Waktu',
             'status' => 'Status',
         ];
     }

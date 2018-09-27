@@ -15,12 +15,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="visited-view">
 
 <?php 
-
-
 $detail = 
 '
 <div class="col-md-4">
-<img class="img-thumbnail" src="../../../yiibase/web/user/photo/'.$model->photo.'">
+<img class="img-thumbnail" src="'.$model->photo.'">
 </div>
 <div class="col-md-8">
 '.
@@ -59,8 +57,8 @@ $log = GridView::widget([
             ['class' => 'yii\grid\SerialColumn'],
             // 'id',
             'visit_code',
-            'checkin',
-            'checkout',
+            'gate',
+            'time_pass',
             'status'
         ],
     ]); 

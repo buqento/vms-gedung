@@ -64,6 +64,7 @@ class UserApp extends \yii\db\ActiveRecord
             'username' => 'Nama Pengguna',
             'password' => 'Kata Sandi',
             'authKey' => 'Auth Key',
+            'created' => 'Tanggal Pendaftaran'
         ];
     }
 

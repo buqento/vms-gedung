@@ -11,9 +11,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Tenant', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dcldestination-view">
-    <h1>#<?= Html::encode($model->id) ?></h1>
+    <h1>#<?= $this->title ?></h1>
     <div class="col-md-2">
-        <img class="img-thumbnail" src="../uploads/<?= $model->picture ?>">
+        <img class="img-thumbnail" src="<?= $model->picture ?>">
     </div>
     <div class="col-md-10">
         <?= DetailView::widget([

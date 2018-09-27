@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="userapp-view">
     <h1>#<?= Html::encode($model->id) ?></h1>
     <div class="col-md-2">
-        <img class="img-thumbnail" src="../../../yiibase/web/user/photo/<?= $model->photo ?>">
+        <img class="img-thumbnail" src="<?= $model->photo ?>">
     </div>
     <div class="col-md-10">
         <?= DetailView::widget([
@@ -28,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'username',
                 // 'password',
                 // 'authKey',
+                'created:datetime'
             ],
         ]) ?>
 

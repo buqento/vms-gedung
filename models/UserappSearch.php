@@ -47,6 +47,11 @@ class UserappSearch extends Userapp
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'created' => SORT_DESC,
+                ]
+            ],
         ]);
 
         $this->load($params);

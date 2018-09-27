@@ -14,9 +14,7 @@ use yii\web\UploadedFile;
  */
 class DcldestinationController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
+
     public function behaviors()
     {
         return [
@@ -29,10 +27,6 @@ class DcldestinationController extends Controller
         ];
     }
 
-    /**
-     * Lists all Dcldestination models.
-     * @return mixed
-     */
     public function actionIndex()
     {
         $searchModel = new DcldestinationSearch();
@@ -44,12 +38,6 @@ class DcldestinationController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single Dcldestination model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -57,11 +45,14 @@ class DcldestinationController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new Dcldestination model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
+// Smart City
+// Software Engineering
+// Human Resource & GA
+// Mahapatih
+// Solution
+// Advertising Agency
+// Creative
+// Finance
     public function actionCreate()
     {
         $model = new DclDestination();
@@ -77,28 +68,31 @@ class DcldestinationController extends Controller
             $model->email = $post['email'];
             $model->profile = $post['profile'];
             $model->address = $post['address'];
-            $model->picture = UploadedFile::getInstance($model, 'picture');  
-            if($model->save() && $model->upload()){
+            $model->picture = UploadedFile::getInstance($model, 'picture');
+            $model->upload();
+            $model->picture = $this->generateBase64($model->picture);
+            if($model->save()){
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
-
         return $this->render('create', [
             'model' => $model,
         ]);
     }
 
-    /**
-     * Updates an existing Dcldestination model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    public function generateBase64($image)
+    {
+        $path = 'images/' . $image;
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        unlink(Yii::$app->basePath . '/web/' . $path);
+        return $base64;
+    }
+
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
         $post = Yii::$app->request->post('DclDestination');
         if (Yii::$app->request->isPost) {
             $model->company_name = $post['company_name'];
@@ -110,24 +104,18 @@ class DcldestinationController extends Controller
             $model->email = $post['email'];
             $model->profile = $post['profile'];
             $model->address = $post['address'];
-            $model->picture = UploadedFile::getInstance($model, 'picture');  
-            if($model->save() && $model->upload()){
+            $model->picture = UploadedFile::getInstance($model, 'picture');
+            $model->upload();
+            $model->picture = $this->generateBase64($model->picture);
+            if($model->save()){
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
-
         return $this->render('update', [
             'model' => $model,
         ]);
     }
 
-    /**
-     * Deletes an existing Dcldestination model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
@@ -135,13 +123,6 @@ class DcldestinationController extends Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the Dcldestination model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Dcldestination the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = Dcldestination::findOne($id)) !== null) {

@@ -41,13 +41,6 @@ class DclDestination extends \yii\db\ActiveRecord
             [['profile', 'address'], 'string'],
             [['company_name', 'build_name'], 'string', 'max' => 100],
             [['email'], 'email'],
-            [['picture'], 
-                'file', 
-                'skipOnEmpty' => false,
-                'extensions' => 'png, jpg',
-                'maxSize' => 512000, //500 kilobytes is 500 * 1024 bytes = 512 000 bytes
-                'tooBig' => 'Ukuran maksimal file 500kb'
-            ]
         ];
     }
 
@@ -74,7 +67,7 @@ class DclDestination extends \yii\db\ActiveRecord
     public function upload()
     {
         if ($this->validate()) {
-            $this->picture->saveAs('uploads/' . $this->picture->baseName . '.' . $this->picture->extension);
+            $this->picture->saveAs('images/' . $this->picture->baseName . '.' . $this->picture->extension);
             return true;
         } else {
             return false;
