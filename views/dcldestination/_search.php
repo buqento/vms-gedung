@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'close_hour') ?>
 
-    <?= $form->field($model, 'build_name') ?>
+    <?= $form->field($model, 'build_id') ?>
 
     <?php // echo $form->field($model, 'floor') ?>
 

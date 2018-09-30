@@ -27,7 +27,12 @@ DetailView::widget([
     'attributes' => [
         // 'id',
         'guest_name',
-        'id_type',
+        [
+            'attribute' => 'type_id',
+            'value' => function($data) {
+                return $data->type->title;
+            }
+        ],
         'id_number',
         'gender',
         'phone_number',
@@ -40,7 +45,12 @@ DetailView::widget([
         // 'photo',
         'address',
         'visit_code',
-        'destination',
+        [
+            'attribute' => 'destination_id',
+            'value' => function($data) {
+                return $data->tenant->company_name;
+            }
+        ],
         'dt_visit:datetime',
         'long_visit',
         'additional_info:ntext',

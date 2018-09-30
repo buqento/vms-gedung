@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Dcldestination */
 
-$this->title = $model->company_name;
+$this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Tenant', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -23,13 +23,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 'company_name',
                 'open_hour',
                 'close_hour',
-                'build_name',
-                'floor',
+                [
+                    'attribute' => 'build_id',
+                    'value' => function($data) {
+                        return $data->lokasi->name;
+                    }
+                ],
+                [
+                    'attribute' => 'floor_id',
+                    'value' => function($data) {
+                        return $data->lantai->floor;
+                    }
+                ],
                 'phone',
                 'email:email',
-                'profile:ntext',
+                // 'profile:ntext',
                 // 'picture',
-                'address:ntext',
+                // 'address:ntext',
             ],
         ]) ?>
     </div>

@@ -18,8 +18,8 @@ class DcldestinationSearch extends Dcldestination
     public function rules()
     {
         return [
-            [['id', 'floor', 'phone'], 'integer'],
-            [['company_name', 'open_hour', 'close_hour', 'build_name', 'email', 'profile', 'picture', 'address'], 'safe'],
+            [['id', 'floor_id', 'phone'], 'integer'],
+            [['company_name', 'open_hour', 'close_hour', 'build_id', 'email', 'profile', 'picture', 'address'], 'safe'],
         ];
     }
 
@@ -62,12 +62,12 @@ class DcldestinationSearch extends Dcldestination
             'id' => $this->id,
             'open_hour' => $this->open_hour,
             'close_hour' => $this->close_hour,
-            'floor' => $this->floor,
+            'floor_id' => $this->floor_id,
             'phone' => $this->phone,
         ]);
 
         $query->andFilterWhere(['like', 'company_name', $this->company_name])
-            ->andFilterWhere(['like', 'build_name', $this->build_name])
+            ->andFilterWhere(['like', 'build_id', $this->build_id])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'profile', $this->profile])
             ->andFilterWhere(['like', 'picture', $this->picture])

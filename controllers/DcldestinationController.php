@@ -9,9 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
-/**
- * DcldestinationController implements the CRUD actions for Dcldestination model.
- */
+
 class DcldestinationController extends Controller
 {
 
@@ -45,14 +43,6 @@ class DcldestinationController extends Controller
         ]);
     }
 
-// Smart City
-// Software Engineering
-// Human Resource & GA
-// Mahapatih
-// Solution
-// Advertising Agency
-// Creative
-// Finance
     public function actionCreate()
     {
         $model = new DclDestination();
@@ -62,8 +52,8 @@ class DcldestinationController extends Controller
             $model->company_name = $post['company_name'];
             $model->open_hour = $post['open_hour'];
             $model->close_hour = $post['close_hour'];
-            $model->build_name = $post['build_name'];
-            $model->floor = $post['floor'];
+            $model->build_id = $post['build_id'];
+            $model->floor_id = $post['floor_id'];
             $model->phone = $post['phone'];
             $model->email = $post['email'];
             $model->profile = $post['profile'];
@@ -80,16 +70,6 @@ class DcldestinationController extends Controller
         ]);
     }
 
-    public function generateBase64($image)
-    {
-        $path = 'images/' . $image;
-        $type = pathinfo($path, PATHINFO_EXTENSION);
-        $data = file_get_contents($path);
-        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-        unlink(Yii::$app->basePath . '/web/' . $path);
-        return $base64;
-    }
-
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -98,8 +78,8 @@ class DcldestinationController extends Controller
             $model->company_name = $post['company_name'];
             $model->open_hour = $post['open_hour'];
             $model->close_hour = $post['close_hour'];
-            $model->build_name = $post['build_name'];
-            $model->floor = $post['floor'];
+            $model->build_id = $post['build_id'];
+            $model->floor_id = $post['floor_id'];
             $model->phone = $post['phone'];
             $model->email = $post['email'];
             $model->profile = $post['profile'];
@@ -130,5 +110,15 @@ class DcldestinationController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function generateBase64($image)
+    {
+        $path = 'images/' . $image;
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        unlink(Yii::$app->basePath . '/web/' . $path);
+        return $base64;
     }
 }

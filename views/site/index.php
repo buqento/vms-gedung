@@ -57,22 +57,35 @@ use yii\grid\GridView;
         <div>
 
             <div class="col-md-8">
+
+
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'summary' => false,
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
 
-                        'Tenant',
-                        'Jumlah',
+                        'company_name',
+                        'jumlah'
 
-                        // ['class' => 'yii\grid\ActionColumn'],
+                        // ['class' => 'yii\grid\ActionColumn',
+                        //     'template' => '{view}',
+                        //     'buttons' => [
+                        //         'view' => function ($url, $data) {
+                        //             return Html::a('<span class="glyphicon glyphicon-info-sign"></span>', $url, [
+                        //                         'title' => Yii::t('app', 'Lihat Detail'),
+                        //             ]);
+                        //         }
+                        //     ],
+                        // ]
                     ],
                 ]); ?>
 
             </div>
 
             <div class="col-md-4">
+
+
                 <?= ChartJs::widget([
                     'type' => 'doughnut',
                     'options' => [
@@ -80,10 +93,10 @@ use yii\grid\GridView;
                         'width' => 100
                     ],
                     'data' => [
-                        // 'labels' => ["Smart City", "Software Engineering", "Human Resource & GA", "Mahapatih", "Solution", "Advertising Agency"],
+                        'labels' => $label,
                         'datasets' => [
                             [
-                                'label' => "Data Kunjungan",
+                                // 'label' => false,
                                 'backgroundColor' => 
                                 [
                                     '#d35400',
@@ -91,7 +104,8 @@ use yii\grid\GridView;
                                     '#2ecc71',
                                     '#16a085',
                                     '#3498db',
-                                    '#e74c3c'
+                                    '#e74c3c',
+                                    '#566573'
                                 ],
                                 'borderWidth' => 0,
                                 // 'borderColor' => [
@@ -106,7 +120,7 @@ use yii\grid\GridView;
                                 'pointBorderColor' => "#fff",
                                 'pointHoverBackgroundColor' => "#fff",
                                 'pointHoverBorderColor' => "rgba(179,181,198,1)",
-                                'data' => [$a, $b, $c, $d, $e, $f]
+                                'data' => $data
                             ],
                         ]
                     ]

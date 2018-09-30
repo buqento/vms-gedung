@@ -19,7 +19,7 @@ class VisitedSearchToday extends Visited
     {
         return [
             [['id'], 'integer'],
-            [['guest_name', 'id_type', 'id_number', 'phone_number', 'email', 'photo', 'address', 'visit_code', 'destination', 'dt_visit', 'long_visit', 'additional_info', 'created'], 'safe'],
+            [['guest_name', 'type_id', 'id_number', 'phone_number', 'email', 'photo', 'address', 'visit_code', 'destination_id', 'dt_visit', 'long_visit', 'additional_info', 'created'], 'safe'],
         ];
     }
 
@@ -73,14 +73,14 @@ class VisitedSearchToday extends Visited
         ]);
 
         $query->andFilterWhere(['like', 'guest_name', $this->guest_name])
-            ->andFilterWhere(['like', 'id_type', $this->id_type])
+            ->andFilterWhere(['like', 'type_id', $this->type_id])
             ->andFilterWhere(['like', 'id_number', $this->id_number])
             ->andFilterWhere(['like', 'phone_number', $this->phone_number])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'photo', $this->photo])
             ->andFilterWhere(['like', 'address', $this->address])
             ->andFilterWhere(['like', 'visit_code', $this->visit_code])
-            ->andFilterWhere(['like', 'destination', $this->destination])
+            ->andFilterWhere(['like', 'destination_id', $this->destination_id])
             ->andFilterWhere(['like', 'long_visit', $this->long_visit])
             ->andFilterWhere(['like', 'dt_visit', date("Y-m-d")])
             ->andFilterWhere(['like', 'additional_info', $this->additional_info]);

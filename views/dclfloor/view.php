@@ -2,12 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Dclfloor */
+use yii\grid\GridView;
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Dclfloors', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Lantai', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dclfloor-view">
@@ -17,8 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            // 'id',
-            'floor',
+            'id',
+            'floor'
         ],
     ]) ?>
 

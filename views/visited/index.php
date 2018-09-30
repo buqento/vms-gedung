@@ -52,7 +52,12 @@ if(!empty($_GET['v'])){
             //'photo',
             //'address',
             'visit_code',
-            'destination',
+            [
+                'attribute' => 'destination_id',
+                'value' => function($data) {
+                    return $data->tenant->company_name;
+                }
+            ],
             'dt_visit',
             // 'long_visit',
             // 'additional_info:ntext',

@@ -13,13 +13,12 @@ use app\models\DclDestination;
 use app\models\ViewVisit;
 use app\models\UserApp;
 use app\models\Visited;
+use app\models\SummaryVisit;
 use yii\data\ActiveDataProvider;
 
 class SiteController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
+
     public function behaviors()
     {
         return [
@@ -43,9 +42,6 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function actions()
     {
         return [
@@ -59,66 +55,66 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * Displays homepage.
-     *
-     * @return string
-     */
     public function actionIndex()
     {
+
         $tenant = DclDestination::find()->count();
         $user = UserApp::find()->count();
         $visited = Visited::find()->count();
 
-        $a = Visited::find()
-            ->where(['destination' => 'Smart City'])
-            ->count();
-        $b = Visited::find()
-            ->where(['destination' => 'Software Engineering'])
-            ->count();
-        $c = Visited::find()
-            ->where(['destination' => 'Human Resource & GA'])
-            ->count();
-        $d = Visited::find()
-            ->where(['destination' => 'Mahapatih'])
-            ->count();
-        $e = Visited::find()
-            ->where(['destination' => 'Solution'])
-            ->count();
-        $f = Visited::find()
-            ->where(['destination' => 'Advertising Agency'])
-            ->count();
-
-        $query = (new \yii\db\Query())
-            ->select(['destination AS Tenant', 'COUNT(id) AS Jumlah'])
-            ->from('visited')
-            ->orderBy('Jumlah DESC')
-            ->groupBy('destination');
-
+        //view table
+        $query = SummaryVisit::find();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        //view graphic
+        $rows = 0;
+        $query = "
+        SELECT 
+            visited.destination_id, 
+            dcl_destination.company_name, 
+            COUNT(visited.id) AS jumlah FROM visited
+        INNER JOIN dcl_destination 
+        ON visited.destination_id = dcl_destination.id
+        GROUP BY visited.destination_id
+        ORDER BY dcl_destination.company_name
+        ";
+        $model = Yii::$app->db->createCommand($query);
+        $lines = $model->queryAll();
+        $label = array();
+        $data = array();
+        foreach ($lines as $line) {
+            $label[] = $line['company_name'];
+            $data[] = $line['jumlah'];
+            $rows += 1;
+        }
+        $label = array_slice($label, 0, 20);
+        $data = array_slice($data, 0, 20);
 
         return $this->render('index', [
             'tenant' => $tenant,
             'user' => $user,
             'visited' => $visited,
             'dataProvider' => $dataProvider,
-
-            'a' => $a,
-            'b' => $b,
-            'c' => $c,
-            'd' => $d,
-            'e' => $e,
-            'f' => $f
+            'label' => $label,
+            'data' => $data
         ]);
     }
 
-    /**
-     * Login action.
-     *
-     * @return Response|string
-     */
+    public function getTenant()
+    {
+        return $this->hasOne(DclDestination::className(), ['id' => 'destination_id']);
+    }
+
+    public function getDestination($id)
+    {
+        $destination = Yii::$app->db->createCommand('SELECT company_name FROM dcl_destination WHERE id=$id')->queryAll();
+        // $destination = DclDestination::find()->where(['id' => $id])->one();
+        return $destination;
+    }
+
+
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
@@ -136,11 +132,6 @@ class SiteController extends Controller
         ]);
     }
 
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
     public function actionLogout()
     {
         Yii::$app->user->logout();
@@ -148,11 +139,6 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
     public function actionContact()
     {
         $model = new ContactForm();
@@ -166,11 +152,6 @@ class SiteController extends Controller
         ]);
     }
 
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
     public function actionVisit()
     {
         $dataProvider = new ActiveDataProvider([

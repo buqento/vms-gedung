@@ -11,8 +11,8 @@ use Yii;
  * @property string $company_name
  * @property string $open_hour
  * @property string $close_hour
- * @property string $build_name
- * @property int $floor
+ * @property string $build_id
+ * @property int $floor_id
  * @property int $phone
  * @property string $email
  * @property string $profile
@@ -35,11 +35,11 @@ class DclDestination extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['company_name', 'open_hour', 'close_hour', 'build_name', 'floor', 'phone', 'email', 'profile', 'picture', 'address'], 'required'],
+            [['company_name', 'open_hour', 'close_hour', 'build_id', 'floor_id', 'phone', 'email', 'profile', 'picture', 'address'], 'required'],
             [['open_hour', 'close_hour'], 'safe'],
-            [['floor', 'phone'], 'integer'],
+            [['floor_id', 'phone'], 'integer'],
             [['profile', 'address'], 'string'],
-            [['company_name', 'build_name'], 'string', 'max' => 100],
+            [['company_name'], 'string', 'max' => 100],
             [['email'], 'email'],
         ];
     }
@@ -54,8 +54,8 @@ class DclDestination extends \yii\db\ActiveRecord
             'company_name' => 'Nama Tenant',
             'open_hour' => 'Jam Buka',
             'close_hour' => 'Jam Tutup',
-            'build_name' => 'Lokasi',
-            'floor' => 'Lantai',
+            'build_id' => 'Lokasi',
+            'floor_id' => 'Lantai',
             'phone' => 'Telepon',
             'email' => 'Email',
             'profile' => 'Profil Tenant',
@@ -73,4 +73,15 @@ class DclDestination extends \yii\db\ActiveRecord
             return false;
         }
     }
+
+    public function getLantai()
+    {
+        return $this->hasOne(DclFloor::className(), ['id' => 'floor_id']);// floor <= FK
+    }
+
+    public function getLokasi()
+    {
+        return $this->hasOne(DclBuilding::className(), ['id' => 'build_id']);
+    }
+
 }

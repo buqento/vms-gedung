@@ -26,7 +26,7 @@ use kartik\time\TimePicker;
             ->indexBy('id')
             ->column();
 
-        echo $form->field($model, 'build_name')->widget(Select2::classname(), [
+        echo $form->field($model, 'build_id')->widget(Select2::classname(), [
             'data' => $building,
             'language' => 'en',
         ]);
@@ -38,7 +38,7 @@ use kartik\time\TimePicker;
             ->indexBy('id')
             ->column();
 
-        echo $form->field($model, 'floor')->widget(Select2::classname(), [
+        echo $form->field($model, 'floor_id')->widget(Select2::classname(), [
             'data' => $floor,
             'language' => 'en',
         ]);

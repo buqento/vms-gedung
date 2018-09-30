@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Dclfloor;
+use app\models\DclDestination;
 use app\models\DclfloorSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -75,13 +76,6 @@ class DclfloorController extends Controller
         ]);
     }
 
-    /**
-     * Updates an existing Dclfloor model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -95,13 +89,6 @@ class DclfloorController extends Controller
         ]);
     }
 
-    /**
-     * Deletes an existing Dclfloor model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
@@ -109,13 +96,6 @@ class DclfloorController extends Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the Dclfloor model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Dclfloor the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = Dclfloor::findOne($id)) !== null) {
@@ -124,4 +104,5 @@ class DclfloorController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
 }

@@ -21,6 +21,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'attributes' => [
                 // 'id',
                 'guest_name',
+                [
+                    'attribute' => 'type_id',
+                    'value' => function($data) {
+                        return $data->type->title;
+                    }
+                ],
                 'id_number',
                 'phone_number',
                 'email:email',
