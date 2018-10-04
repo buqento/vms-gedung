@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\DclDestination;
+use app\models\Karyawan;
 use app\models\ViewVisit;
 use app\models\UserApp;
 use app\models\Visited;
@@ -58,9 +59,16 @@ class SiteController extends Controller
     public function actionIndex()
     {
 
-        $tenant = DclDestination::find()->count();
-        $user = UserApp::find()->count();
-        $visited = Visited::find()->count();
+        $karyawan = Karyawan::find()
+            ->where(['tenant_id' => Yii::$app->user->identity->tenant_id])
+            ->count();
+        $visited = Visited::find()
+            // ->where(['status' => Visited::STATUS_ACTIVE]);
+            ->where([
+                'destination_id' => Yii::$app->user->identity->tenant_id,
+                'status' => 0
+                ])
+            ->count();
 
         //view table
         $query = SummaryVisit::find();
@@ -93,8 +101,7 @@ class SiteController extends Controller
         $data = array_slice($data, 0, 20);
 
         return $this->render('index', [
-            'tenant' => $tenant,
-            'user' => $user,
+            'karyawan' => $karyawan,
             'visited' => $visited,
             'dataProvider' => $dataProvider,
             'label' => $label,

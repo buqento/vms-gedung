@@ -21,7 +21,7 @@ $detail =
 <img class="img-thumbnail" src="'.$model->photo.'">
 </div>
 <div class="col-md-8">
-'.
+<h1>#'.$model->visit_code.'</h1>'.
 DetailView::widget([
     'model' => $model,
     'attributes' => [
@@ -37,24 +37,11 @@ DetailView::widget([
         'gender',
         'phone_number',
         'email:email',
-		// [
-		// 	'attribute'=>'photo',
-		// 	'value'=>'../../../yiibase/web/user/photo/'.$model->photo, // WEB ACCESSABLE PATH + FILENAME 
-		// 	'format' => ['image',['width'=>'100','height'=>'100']],
-		// ],
-        // 'photo',
         'address',
-        'visit_code',
-        [
-            'attribute' => 'destination_id',
-            'value' => function($data) {
-                return $data->tenant->company_name;
-            }
-        ],
         'dt_visit:datetime',
         'long_visit',
         'additional_info:ntext',
-        'created:datetime',
+        // 'created',
     ],
 ])
 ."</div>";
@@ -82,12 +69,12 @@ echo TabsX::widget([
     'align' => TabsX::ALIGN_LEFT,
     'items' => [
         [
-            'label' => 'Detail Pengunjung',
+            'label' => 'Detail Kunjungan',
             'content' => $detail,
             'active' => true
         ],
         [
-            'label' => 'Log Pengunjung',
+            'label' => 'Log Kunjungan',
             'content' => $log,
             // 'headerOptions' => ['style'=>'font-weight:bold'],
             'options' => ['id' => 'myveryownID'],

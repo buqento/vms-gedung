@@ -71,6 +71,7 @@ class VisitedSearch extends Visited
             'id' => $this->id,
             // 'dt_visit' => $this->dt_visit,
             'created' => $this->created,
+            'status' => 0,
         ]);
 
         $query->andFilterWhere(['like', 'guest_name', $this->guest_name])
@@ -81,7 +82,7 @@ class VisitedSearch extends Visited
             ->andFilterWhere(['like', 'photo', $this->photo])
             ->andFilterWhere(['like', 'address', $this->address])
             ->andFilterWhere(['like', 'visit_code', $this->visit_code])
-            ->andFilterWhere(['like', 'destination_id', $this->destination_id])
+            ->andFilterWhere(['like', 'destination_id', Yii::$app->user->identity->tenant_id])
             ->andFilterWhere(['like', 'long_visit', $this->long_visit])
             ->andFilterWhere(['like', 'dt_visit', $this->dt_visit])
             ->andFilterWhere(['like', 'additional_info', $this->additional_info]);

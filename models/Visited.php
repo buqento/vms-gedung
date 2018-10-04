@@ -55,6 +55,25 @@ class Visited extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getStatus()
+    {
+        $status = 1;
+        switch ($status) {
+            case 1:
+                $vStatus = 'Disetujui';
+                break;
+            case 2:
+                $vStatus = 'Ditolak';
+                break;
+            
+            default:
+                $vStatus = 'Pending';
+                break;
+        }
+
+        return 'pending';
+    }
+
     public function getType()
     {
         return $this->hasOne(DclType::className(), ['id' => 'type_id']);

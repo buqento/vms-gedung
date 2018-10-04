@@ -41,4 +41,14 @@ class DclBuilding extends \yii\db\ActiveRecord
             'name' => 'Name',
         ];
     }
+
+    public static function getBuildings()
+    {
+        $tenant_id = Yii::$app->user->identity->tenant_id;
+        return self::find()
+            ->select(['name', 'id'])
+            ->where(['tenant_id' => $tenant_id])
+            ->indexBy('id')
+            ->column();
+    }
 }
