@@ -52,49 +52,26 @@ class PemesananController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-
     public function actionCreate()
     {
+        $detail = Visited::findOne($_GET['id']);
         $model = new Pemesanan();
-        $detail = Visited::find()->where(['visit_code' => $_GET['vc']]);
-
         $model->tenant_id = Yii::$app->user->identity->tenant_id;
         $post = Yii::$app->request->post('Pemesanan');
+        $model->visit_code = $detail->visit_code;
+        $model->tanggal_kedatangan = date("Y-m-d");
 
-        if(isset($_GET['dt'])){
-            $model->tanggal_kedatangan = $_GET['dt'];
-        }
-        if(isset($_GET['vc'])){
-            $model->visit_code = $_GET['vc'];
-        }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $this->updateStatus($post['visit_code']);
-            $this->updateRoomStatus($post['jam_pemesanan'], $post['room_id'], $post['visit_code'], $post['long_visit_id']);
-            return $this->redirect(['view', 'id' => $model->id]);
+            $this->updateRoomStatus($post['jam_pemesanan'], $post['room_id'], $post['visit_code']);
+            // return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->session->setFlash('success', "Berhasil memesan ruangan.");
         }
 
         return $this->render('create', [
             'model' => $model,
             'detail' => $detail
         ]);
-    }
-
-    public function updateStatus($visit_code)
-    {
-        Yii::$app->db->createCommand('UPDATE visited SET status=1 WHERE visit_code="'.$visit_code.'"')
-            // ->update('visited', ['status' => 1])
-            // ->where(['visit_code' => $visit_code])
-            ->execute();
-    }
-
-    public function updateRoomStatus($jam, $room_id, $visit_code, $long_visit)
-    {
-        $sampai = $long_visit + $jam;
-        for($i = $jam; $i < $sampai; $i++)
-        {
-            $query = 'UPDATE dcl_room_book SET status=1, visit_code="'.$visit_code.'" WHERE id="'.$i.'" AND room_id="'.$room_id.'"';
-            Yii::$app->db->createCommand($query)->execute();
-        }
     }
 
     public function actionUpdate($id)
@@ -114,6 +91,7 @@ class PemesananController extends Controller
     {
         $this->findModel($id)->delete();
         return $this->redirect(['index']);
+        
     }
 
     protected function findModel($id)
@@ -130,6 +108,29 @@ class PemesananController extends Controller
             return $detail;
         }
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function updateStatus($visit_code)
+    {
+        Yii::$app->db->createCommand('UPDATE visited SET status=1 WHERE visit_code="'.$visit_code.'"')
+            ->execute();
+    }
+
+    //Tanpa parameter durasi pertemuan
+    public function updateRoomStatus($id, $room_id, $visit_code)
+    {
+        $query = 'UPDATE dcl_room_book SET status=1, visit_code="'.$visit_code.'" WHERE id="'.$id.'" AND room_id="'.$room_id.'"';
+        Yii::$app->db->createCommand($query)->execute();
+    }
+
+    public function _updateRoomStatus($jam, $room_id, $visit_code, $long_visit)
+    {
+        $sampai = $long_visit + $jam;
+        for($i = $jam; $i < $sampai; $i++)
+        {
+            $query = 'UPDATE dcl_room_book SET status=1, visit_code="'.$visit_code.'" WHERE id="'.$i.'" AND room_id="'.$room_id.'"';
+            Yii::$app->db->createCommand($query)->execute();
+        }
     }
 
     public function actionFloor() {
@@ -154,14 +155,6 @@ class PemesananController extends Controller
                 $out = DclRoom::getRoomList($room_id); 
                 return json_encode(['output'=>$out, 'selected'=>'']);
             }
-            // if (!empty($parents)) {
-            //     $cat_id = (!empty($parents[0])) ? $parents[0] : null;
-            //     $subcat_id = (!empty($parents[1])) ? $parents[1] : null;
-            //     if($cat_id !== null && $subcat_id !== null){
-            //         $out = DclRoom::getRoomList($cat_id); 
-            //         return json_encode(['output'=>$out, 'selected'=>'']);
-            //     }
-            // }
         }
         return json_encode(['output'=>'', 'selected'=>'']);
     }
@@ -177,5 +170,6 @@ class PemesananController extends Controller
             }
         }
         return json_encode(['output'=>'', 'selected'=>'']);
+
     }
 }

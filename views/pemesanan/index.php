@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-$this->title = 'Informasi Ruangan';
+$this->title = 'Penggunaan Ruangan';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pemesanan-index">
@@ -11,6 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <h1><?= Html::encode($this->title) ?></h1>
+
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -23,13 +24,13 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'tanggal_kedatangan',
                 'value' => function($data){
-                    return $data->tanggal_kedatangan.' / '. $data->roombook->jam;
+                    return $data->tanggal_kedatangan.' / '. $data->roombook->name;
                 }
             ],
             [
                 'attribute' => 'room_id',
                 'value' => function($data) {
-                    return $data->room->title;
+                    return $data->room->name;
                 }
             ],
             [
@@ -39,12 +40,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'tujuan_pertemuan',
-            [
-                'attribute' => 'long_visit_id',
-                'value' => function($data) {
-                    return $data->longvisit->title;
-                }
-            ],
+            // 'long_visit_id',
+            // [
+            //     'attribute' => 'long_visit_id',
+            //     'value' => function($data) {
+            //         return $data->longvisit->title;
+            //     }
+            // ],
 
             // [
             //     'attribute' => 'visit_code',

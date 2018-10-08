@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 $this->title = 'Ubah Data #' . $model->visit_code;
-$this->params['breadcrumbs'][] = ['label' => 'Pesan Ruangan', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Penggunaan Ruangan', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'Ubah';
 ?>
 <div class="pemesanan-update">

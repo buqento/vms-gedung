@@ -38,7 +38,6 @@ class DclFloor extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'floor' => 'Floor',
             'name' => 'Nama Lantai',
             'building_id' => 'Id Gedung',
         ];
@@ -47,7 +46,7 @@ class DclFloor extends \yii\db\ActiveRecord
     public static function getFloorList($building_id)
     {
         $floor = self::find()
-            ->select(['floor', 'name', 'id'])
+            ->select(['name', 'id'])
             ->where(['building_id' => $building_id])
             ->asArray()
             ->all();

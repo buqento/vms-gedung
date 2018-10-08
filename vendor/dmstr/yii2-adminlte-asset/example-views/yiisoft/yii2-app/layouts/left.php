@@ -10,7 +10,7 @@
                 'items' => [
                     ['label' => 'Dashboard', 'icon' => 'dashboard', 'url' => ['/site']],
                     ['label' => 'Janji Bertemu', 'icon' => 'list-alt', 'url' => ['/visited'],],
-                    ['label' => 'Informasi Ruangan', 'icon' => 'clock-o', 'url' => ['/pemesanan'],],
+                    ['label' => 'Penggunaan Ruangan', 'icon' => 'clock-o', 'url' => ['/pemesanan'],],
                     ['label' => 'Host', 'icon' => 'users', 'url' => ['/karyawan'],],
                 ],
             ]

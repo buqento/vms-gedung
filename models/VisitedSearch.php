@@ -71,7 +71,7 @@ class VisitedSearch extends Visited
             'id' => $this->id,
             // 'dt_visit' => $this->dt_visit,
             'created' => $this->created,
-            'status' => 0,
+            // 'status' => 0,
         ]);
 
         $query->andFilterWhere(['like', 'guest_name', $this->guest_name])

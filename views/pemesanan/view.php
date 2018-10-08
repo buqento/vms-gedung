@@ -4,14 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\grid\GridView;
 $this->title = $model->visit_code;
-$this->params['breadcrumbs'][] = ['label' => 'Pesan Ruangan', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Penggunaan Ruangan', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pemesanan-view">
 
-    <div>
-    <h3>Info Pertemuan</h3>
     <div class="col-md-6">
+    <h3>Informasi pertemuan</h3>
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
@@ -25,23 +24,26 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'tujuan_pertemuan',
                 // 'tanggal_kedatangan',
-                [
-                    'attribute' => 'long_visit_id',
-                    'value' => function($data) {
-                        return $data->longvisit->title;
-                    }
-                ],
+                // [
+                //     'attribute' => 'long_visit_id',
+                //     'value' => function($data) {
+                //         return $data->longvisit->title;
+                //     }
+                // ],
                 [
                     'attribute' => 'Lokasi Pertemuan',
                     'value' => function($data) {
-                        return $data->building->name .' / '.$data->lantai->floor.' / '.$data->room->title;
+                        return $data->building->name .' / '.$data->lantai->name.' / '.$data->room->name;
                     }
                 ],
                 // 'created',
             ],
         ]) ?>
-    </div>
-    <div class="col-md-6">
+        </div>
+<div class="col-md-6">
+
+    <h3>Informasi pengunjung</h3>
+
         <?= DetailView::widget([
             'model' => $model,
             'attributes' => [
@@ -70,31 +72,21 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $data->pengunjung->phone_number;
                     }
                 ],
-                [
-                    'attribute' => 'Email',
-                    'value' => function($data) {
-                        return $data->pengunjung->email;
-                    }
-                ],
             ],
         ]) ?>
-    </div>
-    </div>
-    
-    <div>
-    <div class="col-md-6">
-    <h3>Info penggunaan ruangan</h3>
+</div>
+<div class="col-md-6">
+    <h3>Informasi jam penggunaan ruangan</h3>
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'summary' => false,
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
-                'jam',
+                'name',
                 'visit_code',
-                'room_id',
+                // 'room_id',
             ]
         ]); ?>
-    </div>
-    </div>
+</div>
 
 </div>

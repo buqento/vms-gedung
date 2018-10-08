@@ -30,12 +30,13 @@ if(!empty($_GET['v'])){
 
     <?= GridView::widget([
         'dataProvider' => $d,
-        'filterModel' => $f,
+        // 'filterModel' => $f,
         'summary'=>false,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             // 'id',
+            'dt_visit',
             'guest_name',
             // 'id_type',
             // 'id_number',
@@ -50,9 +51,29 @@ if(!empty($_GET['v'])){
             //         return $data->tenant->company_name;
             //     }
             // ],
-            'dt_visit',
-            'long_visit',
+            'host',
             'additional_info:ntext',
+            [
+                'attribute' => 'status',
+                'value' => 
+                    function($data)
+                        {
+                            switch ($data->status) {
+                                case 1:
+                                    $vStatus = 'Disetujui';
+                                    break;
+                                case 2:
+                                    $vStatus = 'Ditolak';
+                                    break;
+                                
+                                default:
+                                    $vStatus = 'Pending';
+                                    break;
+                            }
+                            return $vStatus;
+                        }
+            ], 
+
             //'created',          
             ['class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {approve}',
@@ -82,9 +103,8 @@ if(!empty($_GET['v'])){
 
                     if ($action === 'approve') {
                         $url = [
-                            'pemesanan/create/', 
-                            'dt' => $model->dt_visit,
-                            'vc' => $model->visit_code,
+                            'pemesanan/create/',
+                            'id'=> $key,
                         ];
                         return $url;
                     }

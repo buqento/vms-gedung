@@ -14,10 +14,12 @@ use dmstr\widgets\Alert;
         ) ?>
     </section>
 
-    <section class="content">
-        <?= Alert::widget() ?>
-        <?= $content ?>
-    </section>
+    <div class="container-fluid">
+        <section class="content">
+            <?= Alert::widget() ?>
+            <?= $content ?>
+        </section>
+    </div>
 </div>
 
 <footer class="main-footer">
