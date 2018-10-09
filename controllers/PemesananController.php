@@ -52,6 +52,7 @@ class PemesananController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
     public function actionCreate()
     {
         $detail = Visited::findOne($_GET['id']);
@@ -63,7 +64,7 @@ class PemesananController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $this->updateStatus($post['visit_code']);
-            $this->updateRoomStatus($post['jam_pemesanan'], $post['room_id'], $post['visit_code']);
+            $this->updateRoomStatus($post['jam_pemesanan'], $post['room_id'], $post['visit_code'], $post['long_visit_id']);
             // return $this->redirect(['view', 'id' => $model->id]);
             Yii::$app->session->setFlash('success', "Berhasil memesan ruangan.");
         }
@@ -117,13 +118,13 @@ class PemesananController extends Controller
     }
 
     //Tanpa parameter durasi pertemuan
-    public function updateRoomStatus($id, $room_id, $visit_code)
+    public function _updateRoomStatus($id, $room_id, $visit_code)
     {
         $query = 'UPDATE dcl_room_book SET status=1, visit_code="'.$visit_code.'" WHERE id="'.$id.'" AND room_id="'.$room_id.'"';
         Yii::$app->db->createCommand($query)->execute();
     }
 
-    public function _updateRoomStatus($jam, $room_id, $visit_code, $long_visit)
+    public function updateRoomStatus($jam, $room_id, $visit_code, $long_visit)
     {
         $sampai = $long_visit + $jam;
         for($i = $jam; $i < $sampai; $i++)
@@ -172,4 +173,28 @@ class PemesananController extends Controller
         return json_encode(['output'=>'', 'selected'=>'']);
 
     }
+
+    public function actionLongvisit() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+
+                $jam_pertemuan = $parents[0];
+
+                //Ketersediaan durasi jam kunjungan
+                $availables = Yii::$app->db
+                    ->createCommand('SELECT availjam("'.$jam_pertemuan.'", 1) AS avail')
+                    ->queryScalar();
+                // for($i = 0; $i <= $availables; $i++){
+                // $out[$i] = $i;
+                // }
+                $out = DclRoombook::getAvailableList($availables);
+                return json_encode(['output'=>$out, 'selected'=>'']);
+            }
+        }
+        return json_encode(['output'=>'', 'selected'=>'']);
+
+    }
+    
 }

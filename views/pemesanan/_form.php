@@ -11,12 +11,12 @@ use app\models\Visited;
 use app\models\DclBuilding;
 use app\models\DclFloor;
 use app\models\DclRoom;
+use app\models\SummaryVisit;
 use kartik\select2\Select2;
 use kartik\date\DatePicker;
 use kartik\depdrop\DepDrop;
 use yii\widgets\DetailView;
 use Da\QrCode\QrCode;
-
 $detail = Visited::findOne($_GET['id']);
 ?>
 
@@ -29,6 +29,7 @@ $detail = Visited::findOne($_GET['id']);
         <div class="col-md-6">
 
             <?php
+
             echo $form->field($model, 'visit_code')->textInput(['value' => $detail->visit_code, 'readonly' => true]);
 
             $karyawan_id = Karyawan::find()
@@ -85,7 +86,7 @@ $detail = Visited::findOne($_GET['id']);
                 echo $form->field($model, 'jam_pemesanan')->widget(DepDrop::classname(), [
                     'options'=>[
                         'prompt' => 'Pilih Jam Pertemuan',
-                        'id' => 'jam_pemesanan'
+                        'id' => 'jam-pemesanan'
                     ],
                     'pluginOptions'=>[
                         'depends'=>['room-id'],
@@ -96,14 +97,21 @@ $detail = Visited::findOne($_GET['id']);
 
                 ]);
 
-                echo $form->field($model, 'long_visit_id')->hiddenInput(['value' => 1])->label(false);
+                echo $form->field($model, 'long_visit_id')->widget(DepDrop::classname(), [
+                    'options'=>[
+                        'prompt' => 'Pilih Durasi Pertemuan',
+                        'id' => 'long-visit'
+                    ],
+                    'pluginOptions'=>[
+                        'depends'=>['jam-pemesanan'],
+                        'placeholder'=>'Pilih Durasi Pertemuan',
+                        'url'=>Url::to(['/pemesanan/longvisit']),
+                        'loadingText'=>'Loading...',
+                    ],
 
-                // $long_visit = DclLongVisit::find()->select(['title'])->indexBy('id')->column();
-                // echo $form->field($model, 'long_visit_id')->widget(Select2::classname(), [
-                //         'data' => $long_visit,
-                //         'id' => 'durasi'
-            
-                // ]);
+                ]);
+
+                // echo $form->field($model, 'long_visit_id')->dropDownList($longVisit);
             ?>
         </div>
 
@@ -117,6 +125,7 @@ $detail = Visited::findOne($_GET['id']);
     <div class="col-md-6">
     <h3>Permohonan Kunjungan</h3>
     <?php
+
     echo DetailView::widget([
         'model' => $detail,
         'attributes' => [
