@@ -8,6 +8,7 @@ use app\models\DclFloor;
 use app\models\DclRoom;
 use app\models\Visited;
 use app\models\DclRoombook;
+use app\models\DclHour;
 use app\models\PemesananSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -65,8 +66,8 @@ class PemesananController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $this->updateStatus($post['visit_code']);
             $this->updateRoomStatus($post['jam_pemesanan'], $post['room_id'], $post['visit_code'], $post['long_visit_id']);
-            // return $this->redirect(['view', 'id' => $model->id]);
-            Yii::$app->session->setFlash('success', "Berhasil memesan ruangan.");
+            return $this->redirect(['view', 'id' => $model->id]);
+            // Yii::$app->session->setFlash('success', "Berhasil memesan ruangan.");
         }
 
         return $this->render('create', [
@@ -177,19 +178,18 @@ class PemesananController extends Controller
     public function actionLongvisit() {
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
-            $parents = $_POST['depdrop_parents'];
-            if ($parents != null) {
-
-                $jam_pertemuan = $parents[0];
-
+            $ids = $_POST['depdrop_parents'];
+            if ($ids != null) {
+                $jam_pertemuan = empty($ids[0]) ? null : $ids[0];
+                $room_id = empty($ids[1]) ? null : $ids[1];
                 //Ketersediaan durasi jam kunjungan
                 $availables = Yii::$app->db
-                    ->createCommand('SELECT availjam("'.$jam_pertemuan.'", 1) AS avail')
+                    ->createCommand('SELECT availjam("'.$jam_pertemuan.'", "'.$room_id.'") AS avail')
                     ->queryScalar();
                 // for($i = 0; $i <= $availables; $i++){
                 // $out[$i] = $i;
                 // }
-                $out = DclRoombook::getAvailableList($availables);
+                $out = DclHour::getAvailableList($availables);
                 return json_encode(['output'=>$out, 'selected'=>'']);
             }
         }

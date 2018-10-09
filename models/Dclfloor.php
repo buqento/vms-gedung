@@ -47,7 +47,7 @@ class DclFloor extends \yii\db\ActiveRecord
     {
         $floor = self::find()
             ->select(['name', 'id'])
-            ->where(['building_id' => $building_id])
+            ->where(['building_id' => $building_id, 'tenant_id' => Yii::$app->user->identity->tenant_id])
             ->asArray()
             ->all();
         return $floor;

@@ -47,14 +47,7 @@ $detail = Visited::findOne($_GET['id']);
                     ->dropDownList(DclBuilding::getBuildings(),[
                         'prompt' => 'Pilih Lokasi Gedung',
                         'id' => 'building-id'
-                    ]);
-
-            ?>
-
-        </div>
-        <div class="col-md-6">
-
-            <?php
+                ]);
 
                 echo $form->field($model, 'floor_id')->widget(DepDrop::classname(), [
                     'options'=>['id' => 'floor-id', 'prompt' => 'Pilih Lokasi Lantai'],
@@ -65,8 +58,20 @@ $detail = Visited::findOne($_GET['id']);
                     ]
                 ]);
 
+            ?>
+
+        </div>
+        <div class="col-md-6">
+
+            <?php
+
+
+
                 echo $form->field($model, 'room_id')->widget(DepDrop::classname(), [
-                    'options'=>['id' => 'room-id', 'prompt' => 'Pilih Lokasi Ruangan'],
+                    'options'=>[
+                        'id' => 'room-id', 
+                        'prompt' => 'Pilih Lokasi Ruangan'
+                    ],
                     'pluginOptions'=>[
                         'depends'=>['floor-id'],
                         'placeholder'=>'Pilih Lokasi Ruangan',
@@ -103,7 +108,7 @@ $detail = Visited::findOne($_GET['id']);
                         'id' => 'long-visit'
                     ],
                     'pluginOptions'=>[
-                        'depends'=>['jam-pemesanan'],
+                        'depends'=>['jam-pemesanan', 'room-id'],
                         'placeholder'=>'Pilih Durasi Pertemuan',
                         'url'=>Url::to(['/pemesanan/longvisit']),
                         'loadingText'=>'Loading...',
@@ -111,7 +116,6 @@ $detail = Visited::findOne($_GET['id']);
 
                 ]);
 
-                // echo $form->field($model, 'long_visit_id')->dropDownList($longVisit);
             ?>
         </div>
 

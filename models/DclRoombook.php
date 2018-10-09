@@ -36,17 +36,11 @@ class DclRoombook extends \yii\db\ActiveRecord
     public static function getRoombookList($room_id)
     {
         $rooms = self::find()
-            ->select(['id', 'name'])
+            ->select(['id', 'name', 'visit_code', 'room_id', 'status'])
             ->where(['room_id' => $room_id, 'status' => 0])
             ->asArray()
             ->all();
         return $rooms;
     }
 
-    public static function getAvailableList($availables)
-    {
-        $availables = Yii::$app->db->createCommand('SELECT id, name FROM dcl_room_book WHERE id < "'.$availables.'"')
-        ->queryAll();
-        return $availables;
-    }
 }
