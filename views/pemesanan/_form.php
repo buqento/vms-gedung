@@ -9,6 +9,7 @@ use app\models\DclRoombook;
 use app\models\DclLongVisit;
 use app\models\Visited;
 use app\models\DclBuilding;
+use app\models\DclDestination;
 use app\models\DclFloor;
 use app\models\DclRoom;
 use app\models\SummaryVisit;
@@ -49,7 +50,15 @@ $detail = Visited::findOne($_GET['id']);
                         'id' => 'building-id'
                 ]);
 
+                // $buildings = DclBuilding::getBuildings();
+                // echo $form->field($model, 'tenant_id')->widget(Select2::classname(),
+                //     [
+                //         'data' => $buildings,
+                //         'options' => ['id' => 'building-id'],
+                // ]);
+
                 echo $form->field($model, 'floor_id')->widget(DepDrop::classname(), [
+                    'type'=>DepDrop::TYPE_SELECT2,
                     'options'=>['id' => 'floor-id', 'prompt' => 'Pilih Lokasi Lantai'],
                     'pluginOptions'=>[
                         'depends'=>['building-id'],
@@ -68,10 +77,8 @@ $detail = Visited::findOne($_GET['id']);
 
 
                 echo $form->field($model, 'room_id')->widget(DepDrop::classname(), [
-                    'options'=>[
-                        'id' => 'room-id', 
-                        'prompt' => 'Pilih Lokasi Ruangan'
-                    ],
+                    'type'=>DepDrop::TYPE_SELECT2,
+                    'options'=>['id' => 'room-id', 'prompt' => 'Pilih Lokasi Ruangan'],
                     'pluginOptions'=>[
                         'depends'=>['floor-id'],
                         'placeholder'=>'Pilih Lokasi Ruangan',
@@ -80,21 +87,24 @@ $detail = Visited::findOne($_GET['id']);
                 ]);
 
                 echo $form->field($model, 'tanggal_kedatangan')->widget(DatePicker::classname(), [
-                    'options' => ['placeholder' => 'Pilih Tanggal Pertemuan ...'],
+                    'options' => ['placeholder' => 'Pilih Tanggal', 'id' => 'tanggal-kedatangan'],
+                    'removeButton' => false,
+                    'readonly' => true,
+                    'pickerButton' => ['icon' => 'time'],    
                     'pluginOptions' => [
                         'format' => 'yyyy-mm-dd',
                         'todayHighlight' => true,
                         'autoclose' => true,
+                        'startDate' => date('Y-m-d H:i:s'),
+                        'endDate' => '+7d',
                     ]
                 ]); 
 
                 echo $form->field($model, 'jam_pemesanan')->widget(DepDrop::classname(), [
-                    'options'=>[
-                        'prompt' => 'Pilih Jam Pertemuan',
-                        'id' => 'jam-pemesanan'
-                    ],
+                    'type'=>DepDrop::TYPE_SELECT2,
+                    'options'=>['prompt' => 'Pilih Jam Pertemuan', 'id' => 'jam-pemesanan'],
                     'pluginOptions'=>[
-                        'depends'=>['room-id'],
+                        'depends'=>['room-id', 'tanggal-kedatangan'],
                         'placeholder'=>'Pilih Jam Pertemuan',
                         'url'=>Url::to(['/pemesanan/book']),
                         'loadingText'=>'Loading...',
@@ -103,12 +113,10 @@ $detail = Visited::findOne($_GET['id']);
                 ]);
 
                 echo $form->field($model, 'long_visit_id')->widget(DepDrop::classname(), [
-                    'options'=>[
-                        'prompt' => 'Pilih Durasi Pertemuan',
-                        'id' => 'long-visit'
-                    ],
+                    'type'=>DepDrop::TYPE_SELECT2,
+                    'options'=>['prompt' => 'Pilih Durasi Pertemuan', 'id' => 'long-visit'],
                     'pluginOptions'=>[
-                        'depends'=>['jam-pemesanan', 'room-id'],
+                        'depends'=>['jam-pemesanan', 'room-id', 'tanggal-kedatangan'],
                         'placeholder'=>'Pilih Durasi Pertemuan',
                         'url'=>Url::to(['/pemesanan/longvisit']),
                         'loadingText'=>'Loading...',
@@ -152,8 +160,27 @@ $detail = Visited::findOne($_GET['id']);
             //'created',          
         ]
     ]);
+    echo "<hr>";
+    echo DetailView::widget([
+        'model' => $detail,
+        'attributes' => [
+            [
+                'attribute' => 'type_id',
+                'value' => function($data) {
+                    return $data->type->title;
+                }
+            ],
+            'id_number',
+            'phone_number',
+            // 'email:email',
+            //'photo',
+            'address',
+            'created',          
+        ]
+    ]);
+
     $qrCode = (new QrCode($detail->visit_code))->setSize(150)->setMargin(5)->useForegroundColor(0, 0, 0);
-    echo '<img src="'.$qrCode->writeDataUri().'" alt="..." class="img-thumbnail">';
+    // echo '<img src="'.$qrCode->writeDataUri().'" alt="..." class="img-thumbnail">';
 
     ?>
 

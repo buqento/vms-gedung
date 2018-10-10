@@ -118,13 +118,6 @@ class PemesananController extends Controller
             ->execute();
     }
 
-    //Tanpa parameter durasi pertemuan
-    public function _updateRoomStatus($id, $room_id, $visit_code)
-    {
-        $query = 'UPDATE dcl_room_book SET status=1, visit_code="'.$visit_code.'" WHERE id="'.$id.'" AND room_id="'.$room_id.'"';
-        Yii::$app->db->createCommand($query)->execute();
-    }
-
     public function updateRoomStatus($jam, $room_id, $visit_code, $long_visit)
     {
         $sampai = $long_visit + $jam;
@@ -167,21 +160,22 @@ class PemesananController extends Controller
             $parents = $_POST['depdrop_parents'];
             if ($parents != null) {
                 $roombook_id = $parents[0];
-                $out = DclRoombook::getRoombookList($roombook_id); 
+                $tanggal = empty($parents[1]) ? null : $parents[1];
+                $out = DclRoombook::getRoombookList($roombook_id, $tanggal); 
                 return json_encode(['output'=>$out, 'selected'=>'']);
             }
         }
         return json_encode(['output'=>'', 'selected'=>'']);
-
     }
 
     public function actionLongvisit() {
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
-            $ids = $_POST['depdrop_parents'];
-            if ($ids != null) {
-                $jam_pertemuan = empty($ids[0]) ? null : $ids[0];
-                $room_id = empty($ids[1]) ? null : $ids[1];
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $jam_pertemuan = empty($ids[0]) ? null : $parents[0];
+                $room_id = empty($parents[1]) ? null : $parents[1];
+                $tanggal = empty($parents[3]) ? null : $parents[3];
                 //Ketersediaan durasi jam kunjungan
                 $availables = Yii::$app->db
                     ->createCommand('SELECT availjam("'.$jam_pertemuan.'", "'.$room_id.'") AS avail')
@@ -194,7 +188,6 @@ class PemesananController extends Controller
             }
         }
         return json_encode(['output'=>'', 'selected'=>'']);
-
     }
     
 }

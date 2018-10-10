@@ -33,11 +33,11 @@ class DclRoombook extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function getRoombookList($room_id)
+    public static function getRoombookList($room_id, $tanggal)
     {
         $rooms = self::find()
             ->select(['id', 'name', 'visit_code', 'room_id', 'status'])
-            ->where(['room_id' => $room_id, 'status' => 0])
+            ->where(['room_id' => $room_id, 'dtbook' => $tanggal, 'status' => 0])
             ->asArray()
             ->all();
         return $rooms;

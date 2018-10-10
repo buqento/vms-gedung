@@ -59,7 +59,28 @@ $this->params['breadcrumbs'][] = $this->title;
             //'floor_id',
             //'created',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+                'template' => '{view} {approve}',
+                'buttons' => [
+                    'view' => function ($url, $model) {
+                        return Html::a('<span class="glyphicon glyphicon-info-sign"></span>', $url, [
+                                    'title' => Yii::t('app', 'Detail'),
+                        ]);
+                    },                    
+                ],
+
+                'urlCreator' => function ($action, $model, $key, $index) {
+                    if ($action === 'view') {
+                        $url = [
+                            'pemesanan/view/', 
+                            'id' => $key,
+                        ];
+                        return $url;
+                    }
+
+                }
+            ]
+
         ],
     ]); ?>
 </div>
