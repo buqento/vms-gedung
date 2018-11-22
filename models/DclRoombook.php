@@ -26,11 +26,17 @@ class DclRoombook extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'visit_code' => 'Kode Kunjungan',
+            'visit_code' => 'Kode',
             'name' => 'Jam',
-            'room_id' => 'Room ID',
+            'room_id' => 'Nama Ruangan',
             'status' => 'Status',
+            'dtbook' => 'Tanggal'
         ];
+    }
+
+    public function getRoom()
+    {
+        return $this->hasOne(DclRoom::className(), ['id' => 'room_id']);
     }
 
     public static function getRoombookList($room_id, $tanggal)

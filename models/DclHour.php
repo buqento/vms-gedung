@@ -43,7 +43,7 @@ class DclHour extends \yii\db\ActiveRecord
 
     public static function getAvailableList($availables)
     {
-        $availables = Yii::$app->db->createCommand('SELECT * FROM dcl_hour WHERE id < "'.$availables.'"')
+        $availables = Yii::$app->db->createCommand('SELECT * FROM dcl_hour WHERE id <= "'.$availables.'"')
         ->queryAll();
         return $availables;
     }

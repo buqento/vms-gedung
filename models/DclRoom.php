@@ -1,6 +1,7 @@
 <?php
 
 namespace app\models;
+
 use Yii;
 
 class DclRoom extends \yii\db\ActiveRecord
@@ -14,7 +15,9 @@ class DclRoom extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'name'], 'string', 'max' => 15],
+            [['name', 'building_id', 'floor_id', 'tenant_id'], 'required'],
+            [['building_id', 'floor_id', 'tenant_id'], 'integer'],
+            [['name'], 'string', 'max' => 15],
         ];
     }
 
@@ -22,19 +25,30 @@ class DclRoom extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
             'name' => 'Nama Ruangan',
-            'floor_id' => 'id lantai'
+            'building_id' => 'Nama Gedung',
+            'floor_id' => 'Nama Lantai',
+            'tenant_id' => 'Nama Tenant'
         ];
     }
 
-    public static function getRoomList($floor_id)
+    public function getTenant()
+    {
+        return $this->hasOne(DclDestination::className(), ['id' => 'tenant_id']);
+    }
+
+    public function getFloor()
+    {
+        return $this->hasOne(DclFloor::className(), ['id' => 'floor_id']);
+    }
+
+    public static function getRoomList()
     {
         $rooms = self::find()
-            ->select(['id', 'name'])
-            ->where(['floor_id' => $floor_id, 'tenant_id' => Yii::$app->user->identity->tenant_id])
-            ->asArray()
-            ->all();
+            ->select(['name'])
+            ->where(['tenant_id' => Yii::$app->user->identity->tenant_id])
+            ->indexBy('id')
+            ->column();
         return $rooms;
     }
 }

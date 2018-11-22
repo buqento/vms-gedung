@@ -2,24 +2,36 @@
 use yii\widgets\Breadcrumbs;
 use dmstr\widgets\Alert;
 
+use yii\helpers\Html;
 ?>
 <div class="content-wrapper">
-    <section class="content-header">
 
-        <?=
-        Breadcrumbs::widget(
-            [
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]
-        ) ?>
-    </section>
-
-    <div class="container-fluid">
+    <!-- <div class="container"> -->
         <section class="content">
-            <?= Alert::widget() ?>
-            <?= $content ?>
+
+            <div class="box box-default">
+            <div class="box-header with-border">
+              <h3 class="box-title"><?= Html::encode($this->title) ?></h3>
+              <div class="box-tools pull-right">
+                <?=
+                Breadcrumbs::widget(
+                    [
+                        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                    ]
+                ) ?>
+              </div><!-- /.box-tools -->
+            </div><!-- /.box-header -->
+            <div class="box-body">
+
+
+                        <?= Alert::widget() ?>
+                        <?= $content ?>
+
+            </div><!-- /.box-body -->
+            </div><!-- /.box -->  
+
         </section>
-    </div>
+    <!-- </div> -->
 </div>
 
 <footer class="main-footer">

@@ -26,8 +26,8 @@ class DclFloor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['floor', 'building_id', 'name'], 'required'],
-            [['floor'], 'string', 'max' => 20],
+            [[ 'building_id', 'name'], 'required'],
+            [['building_id'], 'string', 'max' => 1],
         ];
     }
 
@@ -41,16 +41,6 @@ class DclFloor extends \yii\db\ActiveRecord
             'name' => 'Nama Lantai',
             'building_id' => 'Id Gedung',
         ];
-    }
-
-    public static function getFloorList($building_id)
-    {
-        $floor = self::find()
-            ->select(['name', 'id'])
-            ->where(['building_id' => $building_id, 'tenant_id' => Yii::$app->user->identity->tenant_id])
-            ->asArray()
-            ->all();
-        return $floor;
     }
 
 

@@ -65,15 +65,45 @@ class DclfloorController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Dclfloor();
+        //$model = new Dclfloor();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+
+        $data = [ 
+                    ''['name' => 'nama 1', 'building_id' => 'gedung 1'],
+                    ['name' => 'nama 2', 'building_id' => 'gedung 2']
+                ];
+
+        // $data = [
+        //             '_csrf' => getcs
+        //             'DclFloor'=>[
+        //                 'name' => 'Nama X',
+        //                 'building_id' => 'Gedung' 
+        //             ]
+        //         ];
+
+        foreach ($data as $value) {
+            $model = new Dclfloor();
+            foreach ( $value as $key => $v) {
+                $model->$key = $v;
+            }
+            if ($model->validate()){
+                $model->save();
+            }
+            
         }
+        // $model = new Dclfloor();
+        // $model->load($data);
+        // $model->save();
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+
+
+        // if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        //     return $this->redirect(['view', 'id' => $model->id]);
+        // }
+
+        // return $this->render('create', [
+        //     'model' => $model,
+        // ]);
     }
 
     public function actionUpdate($id)

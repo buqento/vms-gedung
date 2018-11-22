@@ -2,9 +2,9 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Tambah Data';
-$this->params['breadcrumbs'][] = ['label' => 'Penggunaan Ruangan', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Pemesanan Ruangan';
+// $this->params['breadcrumbs'][] = ['label' => 'Penggunaan Ruangan', 'url' => ['index']];
+// $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pemesanan-create">
 

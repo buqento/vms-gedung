@@ -5,14 +5,9 @@ use yii\grid\GridView;
 
 
 $this->title = 'Penggunaan Ruangan';
-$this->params['breadcrumbs'][] = $this->title;
+// $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pemesanan-index">
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -22,10 +17,23 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             // 'id',
+            'visit_code',
             [
                 'attribute' => 'tanggal_kedatangan',
                 'value' => function($data){
-                    return $data->tanggal_kedatangan.' / '. $data->roombook->name;
+                    return $data->tanggal_kedatangan;
+                }
+            ],
+            [
+                'attribute' => 'jam_pemesanan',
+                'value' => function($data){
+                    return $data->roombook->name;
+                }
+            ],
+            [
+                'attribute' => 'long_visit_id',
+                'value' => function($data) {
+                    return $data->long_visit_id . ' Jam';
                 }
             ],
             [
@@ -41,13 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'tujuan_pertemuan',
-            // 'long_visit_id',
-            // [
-            //     'attribute' => 'long_visit_id',
-            //     'value' => function($data) {
-            //         return $data->longvisit->title;
-            //     }
-            // ],
+
 
             // [
             //     'attribute' => 'visit_code',
@@ -55,8 +57,8 @@ $this->params['breadcrumbs'][] = $this->title;
             //         return $data->pengunjung->guest_name;
             //     }
             // ],
-            //'building_id',
-            //'floor_id',
+            // 'building_id',
+            // 'floor_id',
             //'created',
 
             ['class' => 'yii\grid\ActionColumn',

@@ -8,12 +8,11 @@ use kartik\tabs\TabsX;
 /* @var $this yii\web\View */
 /* @var $model app\models\Visited */
 
-$this->title = $model->visit_code;
-$this->params['breadcrumbs'][] = ['label' => 'Kunjungan', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Detail Janji Bertemu';
+// $this->params['breadcrumbs'][] = ['label' => 'Kunjungan', 'url' => ['index']];
+// $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="visited-view">
-
 <?php 
 $detail = 
 '
@@ -21,11 +20,12 @@ $detail =
 <img class="img-thumbnail" src="'.$model->photo.'">
 </div>
 <div class="col-md-8">
-<h1>#'.$model->visit_code.'</h1>'.
+<p>'.Html::a('<span class="glyphicon glyphicon-plus"></span> Pesan Ruangan', ['pemesanan/create', 'id' => $model->id], ['class' => 'btn-sm btn-success']).'</p>'.
 DetailView::widget([
     'model' => $model,
     'attributes' => [
         // 'id',
+        'visit_code',
         'guest_name',
         [
             'attribute' => 'type_id',

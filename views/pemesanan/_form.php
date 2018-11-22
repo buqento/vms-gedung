@@ -24,7 +24,6 @@ $detail = Visited::findOne($_GET['id']);
 <div class="pemesanan-form">
 
     <div class="col-md-6">
-    <h3>Tambah Data</h3>
     <?php $form = ActiveForm::begin(); ?>
 
         <div class="col-md-6">
@@ -42,30 +41,33 @@ $detail = Visited::findOne($_GET['id']);
                     'data' => $karyawan_id,
                 ]);
 
-                echo $form->field($model, 'tujuan_pertemuan')->textInput();
-
-                echo $form->field($model, 'building_id')
-                    ->dropDownList(DclBuilding::getBuildings(),[
-                        'prompt' => 'Pilih Lokasi Gedung',
-                        'id' => 'building-id'
-                ]);
+                echo $form->field($model, 'tujuan_pertemuan')->textarea(['rows' => 4]);
 
                 // $buildings = DclBuilding::getBuildings();
-                // echo $form->field($model, 'tenant_id')->widget(Select2::classname(),
+                // echo $form->field($model, 'building_id')->widget(Select2::classname(),
                 //     [
                 //         'data' => $buildings,
                 //         'options' => ['id' => 'building-id'],
                 // ]);
 
-                echo $form->field($model, 'floor_id')->widget(DepDrop::classname(), [
-                    'type'=>DepDrop::TYPE_SELECT2,
-                    'options'=>['id' => 'floor-id', 'prompt' => 'Pilih Lokasi Lantai'],
-                    'pluginOptions'=>[
-                        'depends'=>['building-id'],
-                        'placeholder'=>'Pilih Lokasi Lantai',
-                        'url'=>Url::to(['/pemesanan/floor'])
-                    ]
-                ]);
+                // echo $form->field($model, 'floor_id')->widget(DepDrop::classname(), [
+                //     'type'=>DepDrop::TYPE_SELECT2,
+                //     'options'=>['id' => 'floor-id', 'prompt' => 'Pilih Lokasi Lantai'],
+                //     'pluginOptions'=>[
+                //         'depends'=>['building-id'],
+                //         'placeholder'=>'Pilih Lokasi Lantai',
+                //         'url'=>Url::to(['/pemesanan/floor'])
+                //     ]
+                // ]);
+                // echo $form->field($model, 'room_id')->widget(DepDrop::classname(), [
+                //     'type'=>DepDrop::TYPE_SELECT2,
+                //     'options'=>['id' => 'room-id', 'prompt' => 'Pilih Lokasi Ruangan'],
+                //     'pluginOptions'=>[
+                //         'depends'=>['floor-id'],
+                //         'placeholder'=>'Pilih Lokasi Ruangan',
+                //         'url'=>Url::to(['/pemesanan/room'])
+                //     ]
+                // ]);
 
             ?>
 
@@ -73,18 +75,6 @@ $detail = Visited::findOne($_GET['id']);
         <div class="col-md-6">
 
             <?php
-
-
-
-                echo $form->field($model, 'room_id')->widget(DepDrop::classname(), [
-                    'type'=>DepDrop::TYPE_SELECT2,
-                    'options'=>['id' => 'room-id', 'prompt' => 'Pilih Lokasi Ruangan'],
-                    'pluginOptions'=>[
-                        'depends'=>['floor-id'],
-                        'placeholder'=>'Pilih Lokasi Ruangan',
-                        'url'=>Url::to(['/pemesanan/room'])
-                    ]
-                ]);
 
                 echo $form->field($model, 'tanggal_kedatangan')->widget(DatePicker::classname(), [
                     'options' => ['placeholder' => 'Pilih Tanggal', 'id' => 'tanggal-kedatangan'],
@@ -99,6 +89,13 @@ $detail = Visited::findOne($_GET['id']);
                         'endDate' => '+7d',
                     ]
                 ]); 
+
+                $rooms = DclRoom::getRoomList();
+                echo $form->field($model, 'room_id')->widget(Select2::classname(),
+                    [
+                        'data' => $rooms,
+                        'options' => ['id' => 'room-id', 'prompt' => 'Pilih Ruangan'],
+                ]);
 
                 echo $form->field($model, 'jam_pemesanan')->widget(DepDrop::classname(), [
                     'type'=>DepDrop::TYPE_SELECT2,
@@ -135,7 +132,7 @@ $detail = Visited::findOne($_GET['id']);
     </div>
 
     <div class="col-md-6">
-    <h3>Permohonan Kunjungan</h3>
+    <h4>Permohonan Kunjungan</h4>
     <?php
 
     echo DetailView::widget([

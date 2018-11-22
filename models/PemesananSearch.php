@@ -46,7 +46,7 @@ class PemesananSearch extends Pemesanan
             // $query->where('0=1');
             return $dataProvider;
         }
-        $query->groupBy('visit_code');
+        // $query->groupBy('visit_code');
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,

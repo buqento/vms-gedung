@@ -7,8 +7,8 @@ use yii\helpers\Html;
 /* @var $model app\models\Visited */
 
 $this->title = 'Create Visited';
-$this->params['breadcrumbs'][] = ['label' => 'Visiteds', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+// $this->params['breadcrumbs'][] = ['label' => 'Visiteds', 'url' => ['index']];
+// $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="visited-create">
 

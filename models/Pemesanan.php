@@ -6,43 +6,35 @@ use Yii;
 
 class Pemesanan extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
+
     public static function tableName()
     {
         return 'pemesanan';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
-            [['karyawan_id', 'tujuan_pertemuan', 'tanggal_kedatangan', 'jam_pemesanan', 'long_visit_id', 'visit_code', 'tenant_id', 'building_id', 'floor_id', 'room_id'], 'required'],
+            [['karyawan_id', 'tujuan_pertemuan', 'tanggal_kedatangan', 'jam_pemesanan', 'long_visit_id', 'visit_code', 'tenant_id', 'room_id'], 'required'],
             [['created'], 'safe'],
             [['tujuan_pertemuan'], 'string', 'max' => 100],
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
             'id' => 'ID',
             'karyawan_id' => 'Bertemu Dengan',
             'tujuan_pertemuan' => 'Informasi Pertemuan',
-            'tanggal_kedatangan' => 'Tanggal Pertemuan',
-            'jam_pemesanan' => 'Jam Pertemuan',
-            'long_visit_id' => 'Durasi Pertemuan',
+            'tanggal_kedatangan' => 'Tanggal',
+            'jam_pemesanan' => 'Jam Mulai',
+            'long_visit_id' => 'Durasi',
             'visit_code' => 'Kode Kunjungan',
             'tenant_id' => 'Id Tenant',
             'building_id' => 'Lokasi Gedung',
             'floor_id' => 'Lokasi Lantai',
-            'room_id' => 'Lokasi Ruang',
+            'room_id' => 'Ruangan',
             'created' => 'Tanggal Permohonan',
         ];
     }
@@ -81,4 +73,5 @@ class Pemesanan extends \yii\db\ActiveRecord
     {
         return $this->hasOne(DclRoombook::className(), ['id' => 'jam_pemesanan']);
     }
+
 }

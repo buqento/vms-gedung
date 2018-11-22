@@ -10,6 +10,7 @@ use app\models\Visited;
 use app\models\DclRoombook;
 use app\models\DclHour;
 use app\models\PemesananSearch;
+use app\models\UserLog;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -48,9 +49,21 @@ class PemesananController extends Controller
             'query' => DclRoombook::find()->where(['visit_code' => $model->visit_code]),
         ]);
 
+        $user = UserLog::find();
+        $dataLog = new ActiveDataProvider([
+            'query' => $user,
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
+        ]);
+
+
         return $this->render('view', [
             'model' => $model,
             'dataProvider' => $dataProvider,
+            'dataLog' => $dataLog
         ]);
     }
 
@@ -61,7 +74,9 @@ class PemesananController extends Controller
         $model->tenant_id = Yii::$app->user->identity->tenant_id;
         $post = Yii::$app->request->post('Pemesanan');
         $model->visit_code = $detail->visit_code;
-        $model->tanggal_kedatangan = date("Y-m-d");
+        $dt_visit = strtotime($detail->dt_visit);
+        $model->tanggal_kedatangan = date('Y-m-d', $dt_visit);
+        $model->tujuan_pertemuan = $detail->additional_info;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $this->updateStatus($post['visit_code']);
@@ -173,12 +188,12 @@ class PemesananController extends Controller
         if (isset($_POST['depdrop_parents'])) {
             $parents = $_POST['depdrop_parents'];
             if ($parents != null) {
-                $jam_pertemuan = empty($ids[0]) ? null : $parents[0];
+                $jam_pertemuan = empty($parents[0]) ? null : $parents[0];
                 $room_id = empty($parents[1]) ? null : $parents[1];
-                $tanggal = empty($parents[3]) ? null : $parents[3];
+                $tanggal = empty($parents[2]) ? null : $parents[2];
                 //Ketersediaan durasi jam kunjungan
                 $availables = Yii::$app->db
-                    ->createCommand('SELECT availjam("'.$jam_pertemuan.'", "'.$room_id.'") AS avail')
+                    ->createCommand('SELECT availjam("'.$jam_pertemuan.'", "'.$room_id.'", "'.$tanggal.'") AS avail')
                     ->queryScalar();
                 // for($i = 0; $i <= $availables; $i++){
                 // $out[$i] = $i;

@@ -5,20 +5,19 @@ use yii\grid\GridView;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
 
-$this->title = 'Host';
-// $this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Ruangan';
+
 ?>
-<div class="karyawan-index">
+<div class="dclroom-index">
 
     <p>
-        <?= Html::button('<span class="glyphicon glyphicon-plus"></span> Tambah Host', 
-        ['value' => Url::to(['create']), 'class' => 'btn btn-success', 'id' => 'modalButton']
-        )?>
+    <?= Html::button('Tambah Data', ['value' => Url::to(['create']), 
+    'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
     </p>
 
     <?php
     Modal::begin([
-        'header' => '<h4>Tambah Host</h4>',
+        'header' => '<h4>Tambah Ruangan</h4>',
         'id' => 'modal',
         'size' => 'modal-sm',
     ]);
@@ -28,19 +27,21 @@ $this->title = 'Host';
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        // 'filterModel' => $searchModel,
         'summary' => false,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             // 'id',
-            // 'tenant_id',
-            'nama',
-            'email:email',
-            'telepon',
-            'jabatan',
-
+            'name',
+            [
+                'attribute' => 'floor_id',
+                'value' => function($data){
+                    return $data->floor->name;
+                }
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+
 </div>
